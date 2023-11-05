@@ -1,0 +1,553 @@
+MATLAB version 9.8.0.1323502 (R2020a) on architecture win64
+
+run: { runid='3D_case1' toolbox='empty' tbxctor=@empty_ctor isol_type='' sol_type='' dir='F:\onedrive\OneDrive - University of Bristol\Codes stall\NonsmoothSystem\ImpactingHybridSystem\3D_case\BEB_SN_codim2\data\3D_case1' bdfname='F:\onedrive\OneDrive - University of Bristol\Codes stall\NonsmoothSystem\ImpactingHybridSystem\3D_case\BEB_SN_codim2\data\3D_case1\bd.mat' logname='F:\onedrive\OneDrive - University of Bristol\Codes stall\NonsmoothSystem\ImpactingHybridSystem\3D_case\BEB_SN_codim2\data\3D_case1\coco_log.txt' scrname='F:\onedrive\OneDrive - University of Bristol\Codes stall\NonsmoothSystem\ImpactingHybridSystem\3D_case\BEB_SN_codim2\data\3D_case1\coco_scr.txt' }
+
+all: { TOL=1e-06 CleanData=false LogLevel=1 data_dir='F:\onedrive\OneDrive - University of Bristol\Codes stall\NonsmoothSystem\ImpactingHybridSystem\3D_case\BEB_SN_codim2\data' }
+  +-cont: { h0=0.001 h_min=0.0001 h_max=1 h_fac_min=0.1 h_fac_max=2 almax=45 NullItMX=1 ItMX=500 NPR=1 NAdapt=1 }
+  +-coll: { NTST=30 NCOL=5 TOL=0.01 }
+  +-corr: { ItMX=50 SubItMX=4 TOL=1e-09 ResTOL=1e-09 }
+  +-lsol: { det=true }
+
+funcs
+  +-Det_func: { type='zero' }
+  +-pars: { type='inactive' pars={ 'lambda_1' 'lambda_2' 'lambda_3' 'b2' 'b3' 'T' 'mu' 'eta' } }
+  +-cseg
+  | +-prcond: { type='zero' }
+  +-atlas
+    +-test
+      +-BP: { type='singular' pars={ 'atlas.test.BP' } }
+      +-FP: { type='singular' pars={ 'atlas.test.FP' } }
+
+slots
+  +-cseg
+  | +-fix_mfunc: { signal='fix_mfunc@CurveSegmentBase.fix_mfunc' }
+  | +-remesh: { signal='remesh@CurveSegmentBase.remesh' }
+  | +-set_mode: { signal='set_mode@CurveSegmentBase.set_mode' }
+  | +-update: { signal='update@CurveSegmentBase.update' }
+  | +-update_h: { signal='update_h@CurveSegmentBase.update_h' }
+  | +-update_w: { signal='update_w@CurveSegmentBase.update_w' }
+  +-run: { signal='save_bd@save_run' }
+  +-bd: { signal='save_bd@save_bd' }
+  +-bddat: { signal='save_bd@save_bddat' }
+  +-lsol
+    +-det: { signal='set_mode@set_save_det' }
+
+signals
+  +-save_bd: { owner='coco' slots={ 'run@save_run' 'bd@save_bd' 'bddat@save_bddat' } }
+  +-update: { owner='CurveSegmentBase' slots={ 'cseg.update@CurveSegmentBase.update' } }
+  +-set_mode: { owner='CurveSegmentBase' slots={ 'cseg.set_mode@CurveSegmentBase.set_mode' 'lsol.det@set_save_det' } }
+  +-update_h: { owner='CurveSegmentBase' slots={ 'cseg.update_h@CurveSegmentBase.update_h' } }
+  +-fix_mfunc: { owner='CurveSegmentBase' slots={ 'cseg.fix_mfunc@CurveSegmentBase.fix_mfunc' } }
+  +-remesh: { owner='atlas_1d' slots={ 'cseg.remesh@CurveSegmentBase.remesh' } }
+
+*********************************************************************
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          4.98e-02  4.04e+00    0.0    0.0    0.0
+   1   1  1.00e+00  3.30e-01  1.29e-02  3.95e+00    0.0    0.0    0.0
+   2   1  1.00e+00  1.77e-01  3.27e-03  3.91e+00    0.0    0.0    0.0
+   3   1  1.00e+00  8.76e-02  6.58e-04  3.90e+00    0.0    0.0    0.0
+   4   1  1.00e+00  2.89e-02  6.20e-05  3.89e+00    0.0    0.0    0.0
+   5   1  1.00e+00  3.34e-03  7.86e-07  3.89e+00    0.0    0.0    0.0
+   6   1  1.00e+00  4.35e-05  1.32e-10  3.89e+00    0.0    0.0    0.0
+   7   1  1.00e+00  7.33e-09  7.14e-17  3.89e+00    0.0    0.0    0.0
+   8   1  1.00e+00  3.95e-15  3.56e-17  3.89e+00    0.0    0.0    0.0
+init_chart: init_chart: angle(t,t9) =  5.45e+01[DEG]
+init_chart: init_chart: angle(t,t10) =  6.62e+01[DEG]
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    0    1.00e-03  00:00:00   3.8942e+00      1  EP      2.5000e+00   4.3269e-01
+
+POINT 0: computation finished
+*********************************************************************
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.28e-09  3.89e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.04e-07  6.47e-16  3.89e+00    0.0    0.0    0.0
+   2   1  1.00e+00  2.95e-14  1.76e-16  3.89e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    1    1.90e-03  00:00:00   3.8933e+00      2          2.4994e+00   4.3228e-01
+
+POINT 1: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          5.42e-17  3.89e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          8.18e-09  3.89e+00    0.0    0.0    0.0
+   1   1  1.00e+00  3.75e-07  8.91e-15  3.89e+00    0.0    0.0    0.0
+   2   1  1.00e+00  4.08e-13  1.36e-16  3.89e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    2    3.61e-03  00:00:00   3.8917e+00      3          2.4983e+00   4.3152e-01
+
+POINT 2: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          3.72e-17  3.89e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.93e-08  3.89e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.36e-06  1.23e-13  3.89e+00    0.0    0.0    0.0
+   2   1  1.00e+00  5.70e-12  8.75e-17  3.89e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    3    6.86e-03  00:00:00   3.8887e+00      4          2.4962e+00   4.3006e-01
+
+POINT 3: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          5.49e-17  3.89e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.04e-07  3.88e+00    0.0    0.0    0.0
+   1   1  1.00e+00  4.90e-06  1.60e-12  3.88e+00    0.0    0.0    0.0
+   2   1  1.00e+00  7.50e-11  1.84e-16  3.88e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    4    1.30e-02  00:00:00   3.8830e+00      5          2.4922e+00   4.2729e-01
+
+POINT 4: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          3.27e-17  3.88e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          3.67e-07  3.87e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.77e-05  2.06e-11  3.87e+00    0.0    0.0    0.0
+   2   1  1.00e+00  9.98e-10  1.10e-16  3.87e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    5    2.48e-02  00:00:00   3.8721e+00      6          2.4847e+00   4.2201e-01
+
+POINT 5: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          4.90e-17  3.87e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.25e-06  3.85e+00    0.0    0.0    0.0
+   1   1  1.00e+00  6.44e-05  2.64e-10  3.85e+00    0.0    0.0    0.0
+   2   1  1.00e+00  1.36e-08  2.33e-17  3.85e+00    0.0    0.0    0.0
+   3   1  1.00e+00  5.40e-16  2.51e-16  3.85e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    6    4.70e-02  00:00:00   3.8516e+00      7          2.4704e+00   4.1192e-01
+
+POINT 6: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.52e-17  3.85e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          4.07e-06  3.81e+00    0.0    0.0    0.0
+   1   1  1.00e+00  2.35e-04  3.30e-09  3.81e+00    0.0    0.0    0.0
+   2   1  1.00e+00  1.91e-07  1.98e-15  3.81e+00    0.0    0.0    0.0
+   3   1  1.00e+00  1.15e-13  1.82e-16  3.81e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    7    8.94e-02  00:00:00   3.8129e+00      8          2.4433e+00   3.9254e-01
+
+POINT 7: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.28e-17  3.81e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.17e-05  3.74e+00    0.0    0.0    0.0
+   1   1  1.00e+00  8.64e-04  3.90e-08  3.74e+00    0.0    0.0    0.0
+   2   1  1.00e+00  2.91e-06  4.40e-13  3.74e+00    0.0    0.0    0.0
+   3   1  1.00e+00  3.28e-11  1.41e-16  3.74e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    8    1.70e-01  00:00:00   3.7404e+00      9          2.3925e+00   3.5496e-01
+
+POINT 8: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.22e-17  3.74e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.42e-05  3.61e+00    0.0    0.0    0.0
+   1   1  1.00e+00  3.20e-03  3.84e-07  3.61e+00    0.0    0.0    0.0
+   2   1  1.00e+00  5.24e-05  1.02e-10  3.61e+00    0.0    0.0    0.0
+   3   1  1.00e+00  1.39e-08  2.25e-16  3.61e+00    0.0    0.0    0.0
+   4   1  1.00e+00  5.33e-15  1.67e-16  3.61e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    9    3.23e-01  00:00:00   3.6069e+00     10          2.2980e+00   2.8079e-01
+
+POINT 9: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          5.23e-18  3.61e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.28e-05  3.37e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.10e-02  1.38e-06  3.37e+00    0.0    0.0    0.0
+   2   1  1.00e+00  1.49e-03  2.35e-08  3.37e+00    0.0    0.0    0.0
+   3   1  1.00e+00  2.64e-05  7.28e-12  3.37e+00    0.0    0.0    0.0
+   4   1  1.00e+00  8.17e-09  1.12e-16  3.37e+00    0.0    0.0    0.0
+   5   1  1.00e+00  1.26e-14  5.58e-17  3.37e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+   10    3.38e-01  00:00:00   3.3721e+00     11          2.1269e+00   1.2960e-01
+
+POINT 10: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          5.93e-18  3.37e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          3.53e-07  3.15e+00    0.0    0.0    0.0
+   1   2  5.00e-01  4.06e-02  2.98e-07  3.16e+00    0.0    0.0    0.0
+   2   1  1.00e+00  4.74e-03  4.07e-08  3.16e+00    0.0    0.0    0.0
+   3   1  1.00e+00  8.83e-04  1.25e-09  3.16e+00    0.0    0.0    0.0
+   4   1  1.00e+00  2.89e-05  1.31e-12  3.16e+00    0.0    0.0    0.0
+   5   1  1.00e+00  3.04e-08  2.32e-18  3.16e+00    0.0    0.0    0.0
+   6   1  1.00e+00  5.36e-14  1.11e-16  3.16e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.34e-03  3.21e+00    0.0    0.0    0.0
+   1   1  1.00e+00  2.57e-03  0.00e+00  3.21e+00    0.0    0.0    0.0
+   2   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+   3   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+   4   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+   5   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+   6   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+   7   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+   8   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+   9   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  10   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  11   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  12   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  13   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  14   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  15   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  16   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  17   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  18   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  19   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  20   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  21   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  22   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  23   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  24   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  25   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  26   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  27   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  28   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  29   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  30   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  31   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  32   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  33   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  34   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  35   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  36   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  37   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  38   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  39   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  40   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  41   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  42   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  43   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  44   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  45   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  46   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  47   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  48   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  49   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+  50   4  1.25e-01       NaN       NaN       NaN    0.0    0.0    0.0
+
+warning: state_co_correct: correction failed
+no convergence of Newton's method within 50 iterations
+
+warning: EP: error while locating boundary point
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+   11    3.19e-01  00:00:00   3.2078e+00     12  BP      2.0000e+00   2.4394e-05
+   11    3.19e-01  00:00:00   3.1601e+00     13  MX      1.9611e+00  -4.3309e-02
+
+POINT 11: computation finished
+*********************************************************************
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.29e-09  3.89e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.04e-07  8.20e-16  3.89e+00    0.0    0.0    0.0
+   2   1  1.00e+00  3.57e-14  6.92e-17  3.89e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    0    1.00e-03  00:00:00   3.8942e+00     14  EP      2.5000e+00   4.3269e-01
+    1    1.90e-03  00:00:00   3.8950e+00     15          2.5006e+00   4.3309e-01
+
+POINT 1: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          5.29e-19  3.89e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          8.28e-09  3.90e+00    0.0    0.0    0.0
+   1   1  1.00e+00  3.75e-07  8.99e-15  3.90e+00    0.0    0.0    0.0
+   2   1  1.00e+00  4.06e-13  1.96e-16  3.90e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    2    3.61e-03  00:00:00   3.8966e+00     16          2.5017e+00   4.3385e-01
+
+POINT 2: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.78e-17  3.90e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          3.01e-08  3.90e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.35e-06  1.25e-13  3.90e+00    0.0    0.0    0.0
+   2   1  1.00e+00  5.59e-12  2.17e-16  3.90e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    3    6.86e-03  00:00:00   3.8996e+00     17          2.5038e+00   4.3531e-01
+
+POINT 3: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.25e-17  3.90e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.10e-07  3.91e+00    0.0    0.0    0.0
+   1   1  1.00e+00  4.87e-06  1.63e-12  3.91e+00    0.0    0.0    0.0
+   2   1  1.00e+00  7.21e-11  1.62e-16  3.91e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    4    1.30e-02  00:00:01   3.9053e+00     18          2.5078e+00   4.3806e-01
+
+POINT 4: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.68e-17  3.91e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          4.08e-07  3.92e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.75e-05  2.14e-11  3.92e+00    0.0    0.0    0.0
+   2   1  1.00e+00  9.18e-10  1.60e-16  3.92e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    5    2.48e-02  00:00:01   3.9163e+00     19          2.5154e+00   4.4328e-01
+
+POINT 5: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          7.42e-18  3.92e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.55e-06  3.94e+00    0.0    0.0    0.0
+   1   1  1.00e+00  6.29e-05  2.83e-10  3.94e+00    0.0    0.0    0.0
+   2   1  1.00e+00  1.15e-08  1.25e-16  3.94e+00    0.0    0.0    0.0
+   3   1  1.00e+00  1.17e-15  6.60e-17  3.94e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    6    4.70e-02  00:00:01   3.9371e+00     20          2.5298e+00   4.5314e-01
+
+POINT 6: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          3.43e-18  3.94e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          6.08e-06  3.98e+00    0.0    0.0    0.0
+   1   1  1.00e+00  2.24e-04  3.77e-09  3.98e+00    0.0    0.0    0.0
+   2   1  1.00e+00  1.39e-07  1.08e-15  3.98e+00    0.0    0.0    0.0
+   3   1  1.00e+00  3.90e-14  8.85e-17  3.98e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    7    8.94e-02  00:00:01   3.9770e+00     21          2.5575e+00   4.7167e-01
+
+POINT 7: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          6.28e-17  3.98e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.55e-05  4.05e+00    0.0    0.0    0.0
+   1   1  1.00e+00  7.90e-04  5.09e-08  4.05e+00    0.0    0.0    0.0
+   2   1  1.00e+00  1.59e-06  2.04e-13  4.05e+00    0.0    0.0    0.0
+   3   1  1.00e+00  6.36e-12  1.21e-16  4.05e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    8    1.70e-01  00:00:01   4.0535e+00     22          2.6104e+00   5.0617e-01
+
+POINT 8: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.14e-16  4.05e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.16e-04  4.20e+00    0.0    0.0    0.0
+   1   1  1.00e+00  2.72e-03  6.84e-07  4.20e+00    0.0    0.0    0.0
+   2   1  1.00e+00  1.62e-05  2.41e-11  4.20e+00    0.0    0.0    0.0
+   3   1  1.00e+00  5.71e-10  1.44e-16  4.20e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+    9    3.23e-01  00:00:01   4.2018e+00     23          2.7127e+00   5.6919e-01
+
+POINT 9: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          3.84e-17  4.20e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          5.83e-04  4.49e+00    0.0    0.0    0.0
+   1   1  1.00e+00  8.90e-03  8.68e-06  4.49e+00    0.0    0.0    0.0
+   2   1  1.00e+00  1.37e-04  2.04e-09  4.49e+00    0.0    0.0    0.0
+   3   1  1.00e+00  3.20e-08  7.74e-17  4.49e+00    0.0    0.0    0.0
+   4   1  1.00e+00  8.54e-16  1.24e-16  4.49e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+   10    4.84e-01  00:00:01   4.4917e+00     24          2.9120e+00   6.8036e-01
+
+POINT 10: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          5.47e-17  4.49e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.73e-03  4.94e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.69e-02  3.66e-05  4.94e+00    0.0    0.0    0.0
+   2   1  1.00e+00  3.73e-04  1.78e-08  4.94e+00    0.0    0.0    0.0
+   3   1  1.00e+00  1.81e-07  4.00e-15  4.94e+00    0.0    0.0    0.0
+   4   1  1.00e+00  4.09e-14  2.32e-16  4.94e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+   11    5.74e-01  00:00:01   4.9404e+00     25          3.2207e+00   8.2801e-01
+
+POINT 11: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.61e-16  4.94e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          2.77e-03  5.48e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.91e-02  5.13e-05  5.49e+00    0.0    0.0    0.0
+   2   1  1.00e+00  3.67e-04  1.90e-08  5.49e+00    0.0    0.0    0.0
+   3   1  1.00e+00  1.36e-07  1.98e-15  5.49e+00    0.0    0.0    0.0
+   4   1  1.00e+00  1.41e-14  1.71e-16  5.49e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+   12    7.24e-01  00:00:01   5.4863e+00     26          3.5983e+00   9.7835e-01
+
+POINT 12: computation finished
+*********************************************************************
+coco_remesh: mesh accepted after 1 trials
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          1.71e-16  5.49e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          4.60e-03  6.18e+00    0.0    0.0    0.0
+   1   1  1.00e+00  2.32e-02  7.89e-05  6.19e+00    0.0    0.0    0.0
+   2   1  1.00e+00  4.13e-04  2.52e-08  6.19e+00    0.0    0.0    0.0
+   3   1  1.00e+00  1.32e-07  3.04e-15  6.19e+00    0.0    0.0    0.0
+   4   1  1.00e+00  1.57e-14  1.50e-16  6.19e+00    0.0    0.0    0.0
+
+    STEP   DAMPING               NORMS              COMPUTATION TIMES
+  IT SIT     GAMMA     ||d||     ||f||     ||U||   F(x)  DF(x)  SOLVE
+   0                          7.18e-04  6.06e+00    0.0    0.0    0.0
+   1   1  1.00e+00  1.06e-03  7.61e-09  6.06e+00    0.0    0.0    0.0
+   2   1  1.00e+00  4.36e-08  3.69e-16  6.06e+00    0.0    0.0    0.0
+   3   1  1.00e+00  2.12e-15  2.39e-16  6.06e+00    0.0    0.0    0.0
+
+ STEP   STEP SIZE      TIME        ||U||  LABEL  TYPE            b2            T
+   13    9.56e-01  00:00:01   6.0631e+00     27  EP      4.0000e+00   1.1116e+00
+
+POINT 13: computation finished
+*********************************************************************

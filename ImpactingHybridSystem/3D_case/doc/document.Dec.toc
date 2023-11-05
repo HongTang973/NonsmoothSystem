@@ -1,0 +1,16 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Base stone case: SDOF impacting oscillator}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}$f>0$}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}$f<0$}{6}{subsection.1.2}%
+\contentsline {section}{\numberline {2}3 Dimensional Hybrid System}{6}{section.2}%
+\contentsline {paragraph}{Case I: Equilibrium on the Boundary}{8}{section*.8}%
+\contentsline {subparagraph}{(1) $\mathbf {v}_3$ in parallel with the $\Sigma $}{8}{section*.9}%
+\contentsline {subparagraph}{(2) $\mathbf {v}_3$ intersecting with the $\Sigma $}{8}{section*.10}%
+\contentsline {paragraph}{Case II: Equilibrium not on the Boundary}{9}{section*.11}%
+\contentsline {subparagraph}{(1) $\mathbf {v}_3$ in parallel with the $\Sigma $}{9}{section*.12}%
+\contentsline {subparagraph}{(2) $\mathbf {v}_3$ intersecting with the $\Sigma $}{9}{section*.13}%
+\contentsline {subsection}{\numberline {2.1}Virtual equilibrium cases}{10}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}$\theta = 0$}{10}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}$0<\theta < \frac {\pi }{2}$}{10}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Boundary equilibrium}{14}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Existence of the LCO}{15}{subsubsection.2.1.4}%
