@@ -1,6 +1,6 @@
 %% build-up of the coco in the non-smooth impacting hybrid system
 % clear
-clc
+% clc
 close all
 %% -------------  get the coco's directory ----
 % original=pwd;
@@ -61,7 +61,8 @@ F = SIADS23_SN_zero_Fcns_Dummy(par_SP_Nform)
 
 %> the Floquet multiplier
 [A,B,C,R,T_2_det]   = par2NForm_DummyVar(par_SP_Nform);
-[~,~,~,x_00,~,~]    = LCO_Det_search(par_SP_Nform(6),R,A,C,1);
+x_00                = IC_generator(par_SP_Nform(6),R,A,C,1);
+L0                  = C*A*inv(R)*x_00;
 [Mono_p,Salt_p]     = IC2Floque_Multipliers(par_SP_Nform(6),x_00,R,A,C);
 T_2_det(par_SP_Nform(6))
 %> solve the pseudo equilibrium
@@ -111,22 +112,31 @@ par_matrix(:,7) = mu_list_bd0;
 %> get the fixed point 
 [A,B,C,R] = par2NForm_DummyVar(par_SP_Nform);
 % par_matrix(31,:); %> where the irregular point emerges
-[~,~,~,x_00,~,~] = LCO_Det_search(par_SP_Nform(6),R,A,C,1);
+ x_00       = IC_generator(par_SP_Nform(6),R,A,C,1);
+%  u_p        = x_00(2:3);
 [Mono_p,Salt_p]     = IC2Floque_Multipliers(par_SP_Nform(6),x_00,R,A,C);
-GM_p   = max(abs(Salt_p))
-u_p    = x_00(2:3);
+x_0    = R\x_00;
+u_p    = x_0(2:3);
+% GM_p   = max(abs(Salt_p))
+% v = [-0.659548604166351;-0.751661917847524];
+% w = [-0.561944587291412;-0.837304933094644];
 hat_u  = [];
 proj_u = [];
 norm_u = [];
 GM     = [];
 for i =1 : n_num
     [A,B,C,R] = par2NForm_DummyVar(par_matrix(i,:));
-    [~,~,~,x_00,~,~]    = LCO_Det_search(par_matrix(i,6),R,A,C,1);
+    x_00                = IC_generator(par_matrix(i,6),R,A,C,1);
     [Mono_p,Salt_p]     = IC2Floque_Multipliers(par_matrix(i,6),x_00,R,A,C);
     GM                  = [GM, max(abs(Salt_p))];
-    hat_u       = [hat_u, x_00(2:3)];
-    norm_u      = [norm_u,norm(x_00(2:3) - u_p)];
-    proj_u      = [proj_u,w'*(x_00(2:3) - u_p)];
+%     hat_u       = [hat_u, x_00(2:3)];
+%     norm_u      = [norm_u,norm(x_00(2:3) - u_p)];
+%     proj_u      = [proj_u,w'*(x_00(2:3) - u_p)];
+    
+    x_0    = R\x_00;
+    hat_u       = [hat_u, x_0(2:3)];
+    norm_u      = [norm_u,norm(x_0(2:3) - u_p)];
+    proj_u      = [proj_u,w'*(x_0(2:3) - u_p)];
 end
 %>  plot the distribution of the fixed points on the Sigma
 figure;clf
@@ -134,7 +144,8 @@ plot(hat_u(1,:), hat_u(2,:),'b.')
 hold on
 plot(hat_u(1,GM>1+2e-5), hat_u(2,GM>1+2e-5),'r.')
 plot(u_p(1), u_p(2), 'ro')
-
+plot([u_p(1),u_p(1)+0.02*v(1)],[u_p(2),u_p(2)+0.02*v(2)],'k-' )
+plot([u_p(1),u_p(1)-0.02*v(1)],[u_p(2),u_p(2)-0.02*v(2)],'k-' )
 
 %> 
 mu_at_FP_bd0            = real(mu_list_bd0(FP_index_bd0));
@@ -146,14 +157,28 @@ norm_at_FP_bd0          = real(norm_u(FP_index_bd0));
 % plot(mu_list_bd0(GM<=1+2e-5), norm_u(GM<=1+2e-5), 'b.')
 % plot(mu_at_FP_bd0, norm_at_FP_bd0, 'ro')
 % 1.8463
-z_curve_para = @(mu) -sqrt(-a/c*( mu_crit -mu));
+% a= -0.200899639382884;
+% c = 1.2208;
+% z_curve_para = @(mu) -sqrt(-a/c*( mu_crit -mu));
+
+%> added on 16th/Dec 
+d      = 0;
+% a1 =0;
+c_     = @(mu) sqrt(3*a1*d*(mu_crit - mu) + c^2);
+on_off = 1;
+z_curve_para_1 = @(mu) sqrt(-a0./c_(mu).*(mu_crit - mu) + on_off*a1^2/4./c_(mu).^2.*(mu_crit - mu).^2) - on_off*a1/2./c_(mu).*(mu_crit - mu);
+z_curve_para_2 = @(mu) -sqrt(-a0./c_(mu).*(mu_crit - mu) + on_off*a1^2/4./c_(mu).^2.*(mu_crit - mu).^2) - on_off*a1/2./c_(mu).*(mu_crit - mu);
+
+
 FIG1 = figure;clf
 plot(mu_list_bd0(GM>1+2e-5), proj_u(GM>1+2e-5), 'r.')
 hold on
 plot(mu_list_bd0(GM<=1+2e-5), proj_u(GM<=1+2e-5), 'b.')
 plot(mu_at_FP_bd0, norm_at_FP_bd0, 'ro')
-plot(mu_list_bd0, z_curve_para(mu_list_bd0), 'k--')
-plot(mu_list_bd0, -z_curve_para(mu_list_bd0), 'k--')
+% plot(mu_list_bd0, z_curve_para(mu_list_bd0), 'k--')
+% plot(mu_list_bd0, -z_curve_para(mu_list_bd0), 'k--')
+plot(mu_list_bd0, z_curve_para_1(mu_list_bd0), 'g--')
+plot(mu_list_bd0, z_curve_para_2(mu_list_bd0), 'k-')
 xlabel('$\mu$','Interpreter','latex')
 ylabel('$w^{\top}(\hat{u} - u_p)$','Interpreter','latex')
 adj_plot_theme_I(FIG1)
@@ -171,18 +196,38 @@ adj_plot_theme_I(FIG1)
 %> 
 
 FIG2 = figure;
-L0 = 0.2;
-plot(mu_list_bd0, L0*mu_list_bd0 + mu_list_bd0.*proj_u,'r-')
+L1   = v(2);
+h1 = plot(mu_list_bd0(GM>1+2e-5), L0*mu_list_bd0(GM>1+2e-5) + L1*mu_list_bd0(GM>1+2e-5).*proj_u(GM>1+2e-5),'b--','LineWidth',1.4,'displayname','Unstable LCO');
 hold on
-plot(mu_list_bd0, L0*mu_list_bd0 + mu_list_bd0.*z_curve_para(mu_list_bd0), 'k--','LineWidth',1)
-plot(mu_list_bd0, L0*mu_list_bd0 + -mu_list_bd0.*z_curve_para(mu_list_bd0), 'k--','LineWidth',1)
-% ylim([-20 20]*1e-4)
+h2 = plot(mu_list_bd0(GM<=1+2e-5), L0*mu_list_bd0(GM<=1+2e-5) + L1*mu_list_bd0(GM<=1+2e-5).*proj_u(GM<=1+2e-5),'b-','LineWidth',1.4,'displayname','Stable LCO');
+h3 = plot(mu_list_bd0, L0*mu_list_bd0 + L1*mu_list_bd0.*z_curve_para_1(mu_list_bd0), 'r--','LineWidth',1.4,'displayname','Unstable LCO');
+h4 = plot(mu_list_bd0, L0*mu_list_bd0 + L1*mu_list_bd0.*z_curve_para_2(mu_list_bd0), 'r-','LineWidth',1.4,'displayname','Stable LCO');
+h5 = plot(mu_crit, L0*mu_crit + L1*mu_crit.*z_curve_para_2(mu_crit), 'kd','MarkerSize',5,'MarkerFaceColor',[1 1 1],'displayname','SN');
+h6 = plot(mu_list_bd0, 0*mu_list_bd0, 'g-','LineWidth',2,'displayname','Stable PE');
+h7 = plot(-mu_list_bd0, 0*mu_list_bd0, 'y-','LineWidth',2,'displayname','Stable AE');
+h8 = plot(0,0,'ko','MarkerSize',5,'MarkerFaceColor',[1 1 1],'displayname','BEB');
+legend([h1 h2 h3 h4 h5 h6 h7,h8],'location','best')
 grid on
+xlim([-0.005 0.03])
+ylim([-2.5 0.1]*1e-3)
 xlabel('$\mu$','Interpreter','latex')
-ylabel('$w^{\top}(\hat{u} - u_p)$','Interpreter','latex')
+ylabel('$\mathcal{A}$','Interpreter','latex')
 adj_plot_theme_I(FIG2)
+% exportgraphics(FIG2,'./Codim2_3D_unfold_OP.pdf','ContentType','vector')
+FIG3 = figure;
+h1 = plot(mu_list_bd0(GM>1+2e-5), hat_u(1,GM>1+2e-5)-u_p(1,:), 'b--','LineWidth',1.4,'displayname','Unstable LCO');
+hold on
+h2 = plot(mu_list_bd0(GM<=1+2e-5), hat_u(1,GM<=1+2e-5)-u_p(1,:), 'b-','LineWidth',1.4,'displayname','Stable LCO');
 
-% figure
-% plot(mu_list_bd0(GM>1+2e-5), GM(GM>1+2e-5), 'k.')
+h3 = plot(mu_list_bd0,  v(1)*z_curve_para_1(mu_list_bd0), 'r--','LineWidth',1.4,'displayname','Unstable LCO');
+h4 = plot(mu_list_bd0, v(1)*z_curve_para_2(mu_list_bd0), 'r-','LineWidth',1.4,'displayname','Stable LCO');
 
 %>
+h5 = plot(mu_crit, 0, 'ko','MarkerSize',5,'MarkerFaceColor',[1 1 1],'displayname','SN');
+
+xlabel('$\mu$','Interpreter','latex')
+ylabel('$\delta(\hat{\mathcal{A}})$','Interpreter','latex')
+legend([h1 h2 h3 h4 h5],'location','best')
+grid on
+adj_plot_theme_I(FIG3)
+% exportgraphics(FIG3,'./Codim2_3D_unfold_scaled.pdf','ContentType','vector')

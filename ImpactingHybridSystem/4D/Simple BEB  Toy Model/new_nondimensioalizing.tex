@@ -1,0 +1,172 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{comment}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{graphicx}
+\usepackage{subfig}
+%\usepackage{subcaption}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\begin{document}
+	First we write the equation in the original form,
+	\begin{equation}
+	\begin{bmatrix} m_{11} & m_{12}\\ m_{21},&m_{22}
+	\end{bmatrix} \begin{bmatrix}
+	\ddot{X_1}\\ \ddot{X_2}
+	\end{bmatrix}+\begin{bmatrix} c_{11} & c_{12}\\ c_{21}& c_{22}
+	\end{bmatrix} \begin{bmatrix}
+	\dot{X_1}\\ \dot{X_2}
+	\end{bmatrix}+\begin{bmatrix} k_{11} & k_{12}\\ k_{21}&k_{22}
+	\end{bmatrix} \begin{bmatrix}
+	X_1\\ X_2
+	\end{bmatrix}=\begin{bmatrix}
+	f_1\\0
+	\end{bmatrix}
+	\end{equation}
+	multiply both sides with the inversion of $\displaystyle \begin{bmatrix}
+	m_{11} & 0\\ 0 & m_{22}
+	\end{bmatrix}$ and we will get 
+	\begin{equation}
+	\begin{bmatrix} 1 & \frac{m_{12}}{m_{11}}\\ \frac{m_{21}}{m_{22}}&1
+	\end{bmatrix} \begin{bmatrix}
+	\ddot{X_1}\\ \ddot{X_2}
+	\end{bmatrix}+\begin{bmatrix} \frac{c_{11}}{m_{11}} & \frac{c_{12}}{m_{11}}\\ \frac{c_{21}}{m_{22}}& \frac{c_{22}}{m_{22}}
+	\end{bmatrix} \begin{bmatrix}
+	\dot{X_1}\\ \dot{X_2}
+	\end{bmatrix}+\begin{bmatrix} \frac{k_{11}}{m_{11}} & \frac{k_{12}}{m_{11}}\\ \frac{k_{21}}{m_{22}}& \frac{k_{22}}{m_{22}}
+	\end{bmatrix} \begin{bmatrix}
+	X_1\\ X_2
+	\end{bmatrix}=\begin{bmatrix}
+	\frac{f_1}{m_{11}}\\0
+	\end{bmatrix}
+	\end{equation}
+	Using notatin $\omega_{10}^2=\frac{k_{11}}{m_{11}}$, $ \frac{c_{11}}{m_{11}}=2\xi_1 \omega_{10} $, $\omega_{20}^2= \frac{k_{22}}{m_{22}}$, $\frac{c_{22}}{m_{22}}= 2 \xi_2 \omega_{20}$, $ \boxed{ \frac{m_{11}}{m_{22}}= \gamma }$, $\boxed { \frac{\omega_{10}^2}{\omega_{20}^2}= \eta^2 }$. Meanwhile let 
+	$$ 
+	 \frac{m_{12}}{m_{11}}=  \frac{m_{11}}{m_{11}}, \quad \frac{m_{21}}{m_{22}}= \frac{m_{12}}{m_{22}}= \frac{m_{12}}{m_{11}} \cdot \frac{m_{11}}{m_{22}} = \gamma 
+	$$
+	$$ 
+	 \frac{c_{12}}{c_{11}}= - \frac{c_{11}}{m_{11}}=- 2 \xi_1 \omega_{10}, \quad \frac{c_{21}}{c_{22}}= \frac{c_{12}}{c_{22}}= \frac{c_{12}}{c_{11}} \cdot \frac{c_{11}}{c_{22}} = - 2 \xi_1 \omega_{10}\gamma
+	$$
+	$$ 
+	 \frac{k_{12}}{k_{11}} =- \frac{k_{11}}{m_{11}}=-\omega_{10}^2, \quad \frac{k_{21}}{k_{22}}= \frac{k_{12}}{k_{22}}= \frac{k_{12}}{k_{11}} \cdot \frac{k_{11}}{k_{22}} =-\omega_{10}^2 \gamma
+	$$
+	
+	$$ 
+	\rm{d}t = \omega_{20} \rm{d}T, \quad \frac{\rm{d} X}{\rm{d}T}= \omega_{20} \frac{\rm{d}X}{\rm{d} t}, \quad \frac{\rm{d}^2 X}{\rm{d} T^2}=\omega_{20}^2 \frac{\rm{d}^2 X}{\rm{d} t^2}
+	$$
+	and then we can get 
+	\begin{equation}
+	\omega_{20}^2 \begin{bmatrix}
+	1 & \epsilon \\ \epsilon \gamma & 1
+	\end{bmatrix} \begin{bmatrix}
+	\ddot{X}_1\\ \ddot{X}_2
+	\end{bmatrix}
+	+ \omega_{20} \begin{bmatrix} 2 \xi_1 \omega_{10} & - 2 \xi_1 \omega_{10} \\ - 2 \xi_1 \omega_{10} \gamma & 2 \xi_2 \omega_{20}
+	\end{bmatrix} \begin{bmatrix}
+	\dot{X_1}\\ \dot{X_2}
+	\end{bmatrix}+\begin{bmatrix} \omega_{10}^2 & - \omega_{10}^2 \\  - \omega_{10}^2 \gamma &  \omega_{20}^2
+	\end{bmatrix} \begin{bmatrix}
+	X_1\\ X_2
+	\end{bmatrix}=\begin{bmatrix}
+	\frac{f_1}{m_{11}}\\0
+	\end{bmatrix}
+	\end{equation}
+	divide both sides by $\omega_{20}^2$ thwe we further arrive 
+	\begin{equation}
+	 \begin{bmatrix}
+	1 & \epsilon \\ \epsilon \gamma & 1
+	\end{bmatrix} \begin{bmatrix}
+	\ddot{X}_1\\ \ddot{X}_2
+	\end{bmatrix}
+	+  \begin{bmatrix} 2 \xi_1 \eta & -\epsilon 2 \xi_1 \eta \\ -\epsilon 2 \xi_1 \eta \gamma & 2 \xi_2 
+	\end{bmatrix} \begin{bmatrix}
+	\dot{X_1}\\ \dot{X_2}
+	\end{bmatrix}+\begin{bmatrix} \eta^2 & -\epsilon \eta^2 \\  -\epsilon \eta^2 \gamma &  1
+	\end{bmatrix} \begin{bmatrix}
+	X_1\\ X_2
+	\end{bmatrix}=\begin{bmatrix}
+	\frac{f_1}{m_{11} \omega_{20}^2}\\0
+	\end{bmatrix}=\begin{bmatrix}
+	X_{st}\\0
+	\end{bmatrix}
+	\end{equation}
+	Non-dimensionalizing the displacement by $X_{st}$ leads to $U_1=\frac{X_1}{X_{st}},U_2=\frac{X_2}{X_{st}}$. Meanwhile, setting the non-diagonal part of the matrix as perturbation using the parameter $\color{red} \epsilon$, we can get
+	\begin{equation}
+	M
+	\begin{bmatrix}
+	\ddot{U_1}\\\ddot{U_2}
+	\end{bmatrix}+ C \begin{bmatrix}
+	\dot{U_1}\\\dot{U_2}
+	\end{bmatrix}+K\begin{bmatrix}
+	U_1\\U_2
+	\end{bmatrix}=\begin{bmatrix}
+	1 \\0
+	\end{bmatrix}
+	\label{eq:coupling pertubed equation}
+	\end{equation}
+	where $M=\begin{bmatrix}
+	1&0\\0&1
+	\end{bmatrix}+\epsilon \begin{bmatrix}
+	0& m_c\\ \gamma m_c & 0
+	\end{bmatrix}$,
+	%
+	$C=\begin{bmatrix}
+	2 \xi_1 \eta &0\\0&2  \xi_2
+	\end{bmatrix}+\epsilon \begin{bmatrix}
+	0& c_c\\ \gamma c_c & 0
+	\end{bmatrix}$,
+	$K=\begin{bmatrix}
+	\eta^2&0\\0 & 1
+	\end{bmatrix}+\epsilon \begin{bmatrix}
+	0&k_c\\ \gamma k_c& 0
+	\end{bmatrix}$, $m_c = 1$,$c_c = 2 \zeta_1 \eta$, $k_c = -\eta^2$, 
+	when $\epsilon = 0$ we have known that there will be LCO in the first degree, as an impact oscillator. However, we want to know when $\epsilon > 0$, what we can get analytically  based on the already known LCO.
+	
+	Now we will write the true solution by different orders expansion of $\epsilon$ 
+	\begin{align}
+		U_1=\Sigma_0^n \epsilon^{i}U_1^{(i)}\\
+		U_2=\Sigma_0^n \epsilon^{i}U_2^{(i)}\\
+		T_1=\Sigma_0^n \epsilon^{i}T_{i}
+	\end{align}
+$U_1^{(0)}$ and $U_2^{(0)}$ are respectively the homogenous solution of the unperturbed system satisfying
+\begin{equation}
+	U_1^{(0)}(T_0) = U_1^{(0)}(0),~ -r\dot{U}_{1}^{(0)}(T_0) = \dot{U}_{1}^{(0)}(0);~~U_{2}^{(0)}=0 \label{eq:unperturbed reset map}
+\end{equation}
+Substitute the above expansions to Eq.\ref{eq:coupling pertubed equation} and balancing terms with different orders:\begin{align}
+	 \ddot{U}_1^{(i+1)}+2 \eta \xi_1 \dot{U}_1^{(i+1)}+\eta^2 U_1^{(i+1)}=-  ( m_c \ddot{U}_2^{(i)}+ c_c \dot{U}_2^{(i)}+ k_c U_2^{(i)})\\
+	\ddot{U}_2^{(i+1)}+2 \xi_2 \dot{U}_2^{(i+1)}+ U_2^{(i+1)}= -\gamma ( m_c \ddot{U}_1^{(i)}+c_c  \dot{U}_1^{(i)}+k_c U_1^{(i)})
+\end{align}
+
+we can get the correction terms sequentially using above non-homogeneous differential equations: $U_1^{(0)}\neq0, U_2^{(0)}=0 \rightarrow U_1^{(1)}=0 ,U_2^{(1)}\neq0 \rightarrow U_1^{(2)}\neq0 ,U_2^{(2)}=0\rightarrow U_1^{(3)}=0, U_2^{(3)}\neq0... $
+so \[\boxed{ U_1=U_1^{(0)} + \epsilon^2 U_1^{(2)}+ \epsilon^4 U_1^{(4)}+...}\]
+\[\boxed {U_2=\epsilon U_2^{(1)}+\epsilon^3 U_2^{(3)} +...}\]
+If we denote the amplitude of $U_1^{(0)}$ by $U_1^{(0)} \sim O(A)$,Then $U_2^{(1)} \sim \gamma k_c \cdot O(A)$, $U_1^{(2)} \sim \gamma k_c^2 \cdot O(A)$,$U_2^{(3)} \sim \gamma^2 k_c^3 \cdot \O(A)$, $\ldots$, and generally $$U_1^i \sim \gamma^ {\frac{i}{2}} k_c^{i} \cdot O(A), \epsilon^i U_1^i \sim (\sqrt{\gamma} k_c \epsilon)^i \cdot O(A)$$
+
+$$U_2^i \sim \gamma^ {\frac{i+1}{2}} k_c^{i} \cdot O(A), \epsilon^i U_2^i \sim ( \sqrt{\gamma} k_c \epsilon)^i \sqrt{\gamma} \cdot O(A)$$
+Let $u=[U_1,\dot{U}_1,U_2,\dot{U}_2]$, $\mathbf{R}=R_0+\epsilon R_1$:
+\begin{equation}
+	R_0=\begin{bmatrix}
+		1 & 0  & 0 & 0\\
+		0 & -r & 0 & 0\\
+		0 & 0  & 1 & 0\\
+		0 & 0  & 0 & 1
+	\end{bmatrix};~~
+	R_1=\begin{bmatrix}
+		0 & 0  & 0 & 0\\
+		0 & 0  & 0 & 0\\
+		0 & 0  & 0 & 0\\
+		0 & m_c (1+r)   & 0 & 0
+	\end{bmatrix}
+\end{equation}
+If the perturbed solution are still periodic solutions with new period $T$, and the boundary condition will be as following
+%
+\begin{align}
+	\label{eq:perturbed reset map}
+	\mathbf{R} u(T) & = u(0)\\
+	U_1(T) &=U_1(0),~H(U_1(0))=H(U_1(T))=0
+\end{align}
+\end{document}

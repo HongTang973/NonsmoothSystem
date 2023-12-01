@@ -4,14 +4,24 @@ close all
 % clear
 %> so the input should be the problem and the parameter vector
 SN_point_admis  = [-0.1 - 0.2i,-0.1 + 0.2i,-0.5,1.78192697900802,1.6,5.84691856641790 ];
+
+%> the point hitted by the line continuation
+SN_point_admis  = [-0.1	0.2	-0.525014022367497	1.87753996111232	1.6	4.795364374429504];
+
+
+
 equi_type       = 1;
 %>
 [A,B,C,R, T_2_det]  = par2NForm_Lienard(SN_point_admis);
-[~,~,~,x_00,~,~]    = LCO_Det_search(SN_point_admis(6),R,A,C,equi_type);
+x_00                = IC_generator(SN_point_admis(6),R,A,C,equi_type);
 fprintf('Check the PD points! \n')
 [Mono_p,Salt_p]     = IC2Floque_Multipliers(SN_point_admis(6),x_00,R,A,C)
 
+%>
+indexes     = [ 3,4, 6];
+[t_,Jacob]  = get_jacobian(@SIADS23_SN_zero_Fcns, SN_point_admis, indexes) %> & done
 
+fprintf('The slope at (0,0) is %g \n', t_(2)/t_(1))
 
 %% -> define the prob
 dim_sys  = 3;
@@ -30,6 +40,8 @@ prob.sys_vec_index.IC_index         = IC_index;
 prob.sys_vec_index.T_simu_index     = T_simu_index;
 
 %> ----- define the functions to form the question
+prob.evol_seq                       = 'map_phi';
+% prob.evol_seq                       = 'phi_map';
 prob.par_2_flow_operator            = @SIADS23_3D_ODEs;
 prob.par_2_ResetMap                 = @SIADS23_3D_ResetMap;
 prob.efunc                          = @SIADS23_3D_H_x;
@@ -40,9 +52,12 @@ prob.OB_C                           = [1, 0, 0];
 
 
 %% > ---- start the specific problem and do the analysis
-x_p     = x_00;
-T_p     = 5.846837671661376;
-sys_par = [-0.1 + 0.2i, -0.1 - 0.2i, -0.5 , 1.781916719621720+0.000010259409,  1.6 ]';
+% x_p     = x_00;
+x_p     = R\x_00;
+% T_p     = 5.846837671661376;
+% sys_par = [-0.1 + 0.2i, -0.1 - 0.2i, -0.5 , 1.781916719621720+0.000010259409,  1.6 ]';
+T_p     = SN_point_admis(6);
+sys_par = SN_point_admis(1:5)';
 IC      = x_p;
 T       = 20*T_p;
 
@@ -66,11 +81,20 @@ w = eigLV_pMP(:,PD_ind_L);
 w = w/norm(w'*v);
 
 %> 
-prob.PD_fixed_point.v = v;
-prob.PD_fixed_point.w = w;
-[poly_coeff_CtrErr, par_coeff_CtrErr] = General_IHS_PMP_sys_par_coeff(prob, sys_vec)
+prob.fixed_point.v = v;
+prob.fixed_point.w = w;
+% prob.IPC_num_allowed = 1;
+[poly_coeff_CtrErr, par_coeff_CtrErr,bilinear_coeff_CtrErr] = General_IHS_PMP_sys_par_coeff(prob, sys_vec)
 
 
 
 %% > define the specific problem by setting the flow and the reset map
 %  > and event function
+a0 = par_coeff_CtrErr(3,1); % -0.1498      -0.1313
+b0 = par_coeff_CtrErr(4,1); % -0.0472     -0.0414
+a1 = bilinear_coeff_CtrErr(3,1); % phi_map -3.0289 map_phi 3.4711
+b1 = bilinear_coeff_CtrErr(4,1); % 0.4224  0.0055 
+c  = poly_coeff_CtrErr(1,2);
+d  = poly_coeff_CtrErr(1,3);
+
+-a0/b0

@@ -1,4 +1,4 @@
-function [poly_coeff_CtrErr, par_coeff_CtrErr] = General_IHS_PMP_sys_par_coeff(prob, sys_vec)
+function [poly_coeff_CtrErr, par_coeff_CtrErr,bilinear_coeff_CtrErr] = General_IHS_PMP_sys_par_coeff(prob, sys_vec)
 % For a general Hybrid system with a flow region and the reset map on the
 % discontinuity surface, if there is a LCO with
 % x_0: incoming point
@@ -125,7 +125,7 @@ fprintf('lambda converges to %g with %d times iteration and RelTol %g \n', lambd
 %% > evaluate the first derivative regarding the parameters of the system
 init_delta  = 1e-2;
 min_delta   = 1e-12;
-par_coeff_CtrErr  = zeros(dim_par,4);
+par_coeff_CtrErr  = zeros(dim_par,6);
 
 for j = 1:dim_par
 
@@ -134,8 +134,10 @@ for j = 1:dim_par
     par_selection(j)    = 1;
     FO_tmp              = 0;
     SO_tmp              = 0;
+    Te_tmp              = 0;
     tol_FO              = 10;
     tol_SO              = 10;
+    tol_Te              = 10;
     while delta > min_delta
         %  ------- Phi(sys_par + delta) -------
         phi_p1 = General_IHS_P1_Composed_Map(prob, ...
@@ -160,7 +162,7 @@ for j = 1:dim_par
         %     approximation-formula-for-third-derivative-is-my-approach-right
 
         % d_new      = w'*( phi_p2(ind) - phi_m2(ind) - 2*phi_p1(ind) + 2*phi_m1(ind) )/2/delta^3;
-
+        Te_new = ( phi_p1(end) - phi_m1(end))/2/delta;
         %> check the convergence
         if norm( FO_new) > 1e-3
             tol_1 = real(norm( FO_new - FO_tmp )/norm(FO_new));
@@ -173,15 +175,27 @@ for j = 1:dim_par
         else
             tol_2 = real(norm( SO_new - SO_tmp ));
         end
-        % tol_3 = norm( d_new - d_tmp )/norm(d_new);
+        % 
+        if norm( Te_new) > 1e-3
+            tol_3 = real(norm( Te_new - Te_tmp )/norm(Te_new));
+        else
+            tol_3 = real(norm( Te_new - Te_tmp ));
+        end
         %> update
         FO_tmp       = FO_new;
         SO_tmp       = SO_new;
+        Te_tmp       = Te_new;
         % d_tmp       = d_new;
         delta       = delta /2;
         %> update the iteration number
         L_iter = L_iter + 1;
-
+        
+        %> check the tolerence
+        if tol_3 <= tol_Te
+            Te     =  Te_tmp;
+            tol_Te = tol_3;
+        end
+        
         %> check the tolerence
         if tol_2 <= tol_SO
             SO     =  SO_tmp;
@@ -194,7 +208,7 @@ for j = 1:dim_par
         end
 
         %>
-        if tol_FO <=1e-6 && tol_SO <=1e-6
+        if tol_FO <=1e-6 && tol_SO <=1e-6 && tol_Te <=1e-6
             break;
         end
 
@@ -202,11 +216,70 @@ for j = 1:dim_par
     end
     par_coeff_CtrErr(j,1) = FO;
     par_coeff_CtrErr(j,2) = SO/2;
-    par_coeff_CtrErr(j,3) = real(tol_FO);
-    par_coeff_CtrErr(j,4) = real(tol_SO);
-    
-    %% > get the bilinear derivative which should be a matrix : J*u*par_i
-    
-    
+    par_coeff_CtrErr(j,3) = Te;
+    par_coeff_CtrErr(j,4) = real(tol_FO);
+    par_coeff_CtrErr(j,5) = real(tol_SO);
+    par_coeff_CtrErr(j,6) = real(tol_Te);
 end
+    %% > get the bilinear derivative which should be a matrix : J*u*par_i
+    init_delta  = 1e-2;
+    min_delta   = 1e-12;
+    bilinear_coeff_CtrErr  = zeros(dim_par,2);
+
+    for j = 1:dim_par
+
+        delta               =   init_delta;
+        par_selection       = zeros(size(sys_par));
+        par_selection(j)    = 1;
+        FO_tmp              = 0;
+        SO_tmp              = 0;
+        tol_FO              = 10;
+        tol_SO              = 10;
+        while delta > min_delta
+            %  ------- Phi(sys_par + delta, x_p + delta) -------
+            phi_p1_p1 = General_IHS_P1_Composed_Map(prob, ...
+                [x_p; T_p; sys_par + delta*par_selection; x_p + S*delta* v ; T]);
+            %  ------- Phi(sys_par - delta, x_p - delta) -------
+            phi_m1_m1 = General_IHS_P1_Composed_Map(prob, ...
+                [x_p; T_p; sys_par - delta*par_selection; x_p - S*delta* v ; T]);
+            %  ------- Phi(sys_par + delta, x_p - delta) -------
+            phi_p1_m1 = General_IHS_P1_Composed_Map(prob, ...
+                [x_p; T_p; sys_par + delta*par_selection; x_p - S*delta* v ; T]);
+            %  ------- Phi(sys_par - delta, x_p + delta) -------
+            phi_m1_p1 = General_IHS_P1_Composed_Map(prob, ...
+                [x_p; T_p; sys_par - delta*par_selection; x_p + S*delta* v ; T]);
+            %> approximate the first derivative f' = [f(x + h) - f(x-h)]/2/h;
+            tmp         = ( phi_p1_p1(ind) +  phi_m1_m1(ind) - phi_p1_m1(ind) - phi_m1_p1(ind))/4/delta^2;
+            FO_new      = w'*tmp;
+
+            %> check the convergence
+            if norm( FO_new) > 1e-3
+                tol_1 = real(norm( FO_new - FO_tmp )/norm(FO_new));
+            else
+                tol_1 = real(norm( FO_new - FO_tmp ));
+            end
+         
+            %> update
+            FO_tmp       = FO_new;
+            delta       = delta /2;
+            %> update the iteration number
+            L_iter = L_iter + 1;
+
+         
+            %> check the tolerence
+            if tol_1 <= tol_FO
+                FO    = FO_tmp;
+                tol_FO = tol_1;
+            end
+
+            %>
+            if tol_FO <=1e-6 
+                break;
+            end
+
+
+        end
+        bilinear_coeff_CtrErr(j,1) = FO;
+        bilinear_coeff_CtrErr(j,2) = real(tol_FO);
+    end
 

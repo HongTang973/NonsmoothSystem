@@ -278,6 +278,7 @@ end
 if nargout >= 0; varargout{1} =  u;             end
 if nargout >= 2; varargout{2}  = iter;          end
 if nargout >= 3; varargout{3}  = lab;           end
+if bifur_detct && nargout >= 4; varargout{4}  = Monitor_fval;           end
 
 
 %> ------------- built in funcitons -------------------------- %

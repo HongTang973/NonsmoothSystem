@@ -30,17 +30,19 @@ for  i = 1:length(index)
         Salt_p(index(i)) = 100; %> set the trival multiplier to a dummy value for
         %> ease of the continuation
         ind_trivial_multiplier = index(i);
+        %> added by peter 4/11/2023 to check that if the cycle is stable and return the flag
+        S_US_ctr_err   = 1e-6;
+        S_US_indicator = Salt_p;
+        S_US_indicator(ind_trivial_multiplier) = [];
+        if any(abs(S_US_indicator)> 1 + S_US_ctr_err )
+            S_US = 'US';
+        else
+            S_US = 'S';
+        end
+        %> determine the stability of the LCO
     end
 end
-%> added by peter 4/11/2023 to check that if the cycle is stable and return the flag
-S_US_ctr_err   = 1e-6;
-S_US_indicator = Salt_p;
-S_US_indicator(ind_trivial_multiplier) = [];
-if any(abs(S_US_indicator)> 1 + S_US_ctr_err )
-    S_US = 'US';
-else
-    S_US = 'S';
-end
+
 
 %> in case for some imaginary multipliers
 % for j = 1:length(Salt_p)
@@ -51,7 +53,11 @@ end
 Salt_p              = sort(Salt_p);
 %> modified by peter 3/11/2023 -- sove the problem that there is some cases
 %> where the complex multipliers' real part cross the -1 or 1 
-Event_fvals         = real([Salt_p-1; Salt_p+1]) + abs(imag([Salt_p-1; Salt_p+1]));
+% Event_fvals         = real([Salt_p-1; Salt_p+1]) + abs(imag([Salt_p-1; Salt_p+1]));
+%> 30/11/2023 modified to resort 
+Event_fvals         = [sort(real(Salt_p-1) + abs(imag(Salt_p-1)));...
+   sort( real(Salt_p+1) + abs(imag(Salt_p+1)) ) ];
+
 % with this algorithm, the fake crossings will never be detected when the
 % imaginary part is nonzero
 % Event_fvals         =[Salt_p-1; Salt_p+1];

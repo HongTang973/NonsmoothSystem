@@ -1,8 +1,11 @@
 function Maped_state = General_IHS_P1_Composed_Map(prob, sys_vec)
+%> double mode: determined by prob.evol_seq 
+%> mode 1: map first -> free flight 
+%> mode 2: free flight first -> map ensues
 
 %> single impact composed map evaluation
 %< input:
-%> IC - fixed point with perturbation: x_00
+%> IC：- fixed point with perturbation: x_00
 %> IPC_num_allowed : Impact times -- default as 1 
 %> R : the reset map
 %> T : the guessed upper bond of the flight time 
@@ -38,11 +41,20 @@ flow_operator = prob.par_2_flow_operator(sys_par);
 
 ResetMap      = prob.par_2_ResetMap(sys_par);
 
+
 %% --------------- check the fixed point condition ---------------- 
-%> initial step: Solve until the first terminal event: hit the boundary.
-[t1,y1,te_0,ye,~] = ode45(@(t,y) flow_operator(t,y), timespan, x_p, options);
-%> the returning point
-x_00    = ResetMap( y1(end,:)' );
+if strcmp(prob.evol_seq,'phi_map')
+    %> initial step: Solve until the first terminal event: hit the boundary.
+    [t1,y1,te_0,ye,~] = ode45(@(t,y) flow_operator(t,y), timespan, x_p, options);
+    %> the returning point
+    x_00    = ResetMap( y1(end,:)' );
+else
+    %> initial step: Solve until the first terminal event: hit the boundary.
+    [t1,y1,te_0,ye,~] = ode45(@(t,y) flow_operator(t,y), timespan, ResetMap(x_p), options);
+    %> the returning point
+    x_00    = y1(end,:)';
+end
+
 %> check if this already formulates the circle
 if strcmp(prob.call_type,'jacobian')
     if norm(x_00 - x_p)/norm(x_p) > 5e-6
@@ -50,21 +62,36 @@ if strcmp(prob.call_type,'jacobian')
         fprintf('The x_p is not the starting point of a LCO! \n')
     end
 else
+    % 
 end
 % -----------------------------------------------------------------
 
 %> evolute the system with allowed impact times
-
-for i = 1:IPC_num_allowed
-    %> initial step: Solve until the first terminal event: hit the boundary.
-    [t1,y1,te,ye,ie] = ode45(@(t,y) flow_operator(t,y), timespan, IC, options);
-    %> the returning point
-    if ~isempty(ie)
-        IC    = ResetMap( ye' );
-        % Get the new run of flow  with new initial conditions
-    else
-        figure; plot(t1,y1(:,C>0));
-        error('No impact happens!')
+if strcmp(prob.evol_seq,'phi_map')
+    for i = 1:IPC_num_allowed
+        %> initial step: Solve until the first terminal event: hit the boundary.
+        [t1,y1,te,ye,ie] = ode45(@(t,y) flow_operator(t,y), timespan, IC, options);
+        %> the returning point
+        if ~isempty(ie)
+            IC    = ResetMap( ye' );
+            % Get the new run of flow  with new initial conditions
+        else
+            figure; plot(t1,y1(:,C>0));
+            error('No impact happens!')
+        end
+    end
+else %>impose reset map first
+    for i = 1:IPC_num_allowed
+        %> initial step: Solve until the first terminal event: hit the boundary.
+        [t1,y1,te,ye,ie] = ode45(@(t,y) flow_operator(t,y), timespan, ResetMap(IC), options);
+        %> the returning point
+        if ~isempty(ie)
+            IC    = ye';
+            % Get the new run of flow  with new initial conditions
+        else
+            figure; plot(t1,y1(:,C>0));
+            error('No impact happens!')
+        end
     end
 end
 %------------------- return the image of the map after IPC_num_allowed

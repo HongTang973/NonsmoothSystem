@@ -1,0 +1,347 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+\usepackage{comment}
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proof}{Proof}[theorem]
+
+\usepackage{paracol}
+\usepackage{graphicx}
+\usepackage{subfig}
+%\usepackage{subcaption}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{cleveref}
+%
+\usepackage{caption}
+\title{Revision of the DIB in 2D }
+\author{Peter Tang}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Your abstract.
+\end{abstract}
+
+
+%> the first section to raise the 2D problem
+\section{Re-analysis of the 2D Hopf like bifurcation in non-smooth systems}
+\subsection{2D impacting hybrid system}
+\label{sec:2D_IHS}
+
+To start from the complexity analysis of general $n$ dimensional piecewise system and to compare the different aspects of the normal form.
+
+From the \emph{SIADS23}, we reformulate the DIB  problem in 2D impacting hybrid systems.
+
+\begin{lemma}[Topological equivalent lemma]
+	conclusion is: the Li\'enard form with $C = [1,0]$ and $C^TB = 0$ can describe the general case of the 2D boundary equilibrium bifurcation of impacting hybrid systems.
+	The form is given by
+	$
+	A = \begin{bmatrix}
+		\lambda_1 + \lambda_2 & 1 \\
+		-\lambda_1 \lambda_2 & 0
+		\end{bmatrix}
+	$
+	and 
+	$
+	B = [0, (1+r)]^{\top},
+	$
+where $r>0$.
+
+For focus case,
+$
+\lambda_1 = \alpha + \omega i, \lambda_2 = \alpha - \omega i.
+$
+and the reset map is given by 
+$$
+\mathcal{R} =Px^-.
+$$
+where 
+$ P= (I - BCA)$.
+
+\label{lemma:2D canonical form lemma}
+\end{lemma}
+
+\begin{lemma}
+	For a general linearized impacting hybrid system, 
+	\begin{equation}
+		\begin{cases}
+			F  &= A_0 x + N_0 u \\
+			H(x) &= C_0^{\top}x  \\
+			R(x^-) &= x^- - B_0 C_0^{\top} A_0 x^-
+		\end{cases}
+	\end{equation}
+where 
+\begin{equation}
+	C_0^{\top} B_0 =0.
+	\label{eq: RMP tangency condition}
+\end{equation}
+The observability matrix for this system is 
+\begin{equation}
+	\mathcal{O}_0 = [C_0, A_0^{\top} C_0, \cdots , (A_0^{\top})^{n-1}C_0],
+\end{equation}
+with full rank.
+%
+If we say the basis of the $\operatorname{ker}(C_0)$ is $\zeta_i, i = 2,\dots,n-1$, $B_0$ can be characterized  as 
+\[
+ B_0  = b_1  C_0 + \sum_{i=2}^{n} b_i \zeta_i
+\]
+and $b_1=0$ according to \ref{eq: RMP tangency condition}.
+Under a linear transformation, the observability matrix maintains the same. So we can always use a transformation $x = P_0 y$
+\[
+ P_0 = [C_0; \operatorname{ker}(C_0)],
+\]
+the system can be converted to 
+\begin{equation}
+	\begin{cases}
+		F  &= A_1 y + N v  \\
+		H(y) &= \mathbf{e_1}^{\top} y \\
+		 R(y^-) &= y^- - B_1 \mathbf{e_1} A y^- ,
+	\end{cases}
+\end{equation}
+where $B_1 = P_0^{\top} B_0 = [0,b_2, \cdots, b_n]^{\top}$ and $A_1 = P_0^{\top} A_0 P_0$.
+
+Now the observability matrix in the new coordinates should be 
+$\mathcal{O} = [\mathbf{e_1}, A_1^{\top}\mathbf{e_1}, \cdots , (A_1^{\top})^{n-1}\mathbf{e_1}],$ which is also full rank.
+Now the system is with $n^2$ parameters in the matrix $A_1$.
+
+\label{lemma: observable system in stabdard basis}
+\end{lemma}
+
+\begin{theorem}[Observable canonical form]
+	The system in \ref{lemma: observable system in stabdard basis} can be further transformed to observable canonical form.
+	\label{th:OB_form_trans}
+\end{theorem}
+
+\begin{proof}
+	Since $\mathcal{O}$ is full rank we know that  there is unique $z \in \mathcal{R}^n$ such that 
+	$$
+	z^{\top} [(A^{\top})^{n-1}\mathbf{e_1}, \cdots, A^{\top}\mathbf{e_1}, \mathbf{e_1}] = \mathbf{e_1}^{\top}
+	$$ 
+	while the $y = P\hat{y}$ with matrix 
+	\[
+	P = [A^{n-1} z , \cdots, Az, z]
+	\]
+	will transform the matrix to canonical form in \cref{lemma:2D canonical form lemma}.
+\end{proof}
+%> 
+To derive the condition for the 2D BEB and the LCO's existence and stability. 
+
+The existence condition for a LCO in 2D impacting hybrid system is given in [Hong Tang,et al. SIADS23] as
+\begin{equation}
+	 \operatorname{det}(\rm e^{A T} P - I ) =0
+	 \label{eq:det_condition}
+\end{equation}
+
+\section{Focus case}
+For a focus case, we have the general form 
+\begin{equation}
+	\begin{cases}
+		F &= \begin{bmatrix}
+			\alpha & \omega
+			 \\
+			-\omega & \alpha
+		    \end{bmatrix} x + N_0 \mu
+	  \\
+	  H(x) &= C_0^{\top}x  
+	  \\
+	  R(x^-) &= x^- - B_0 C_0^{\top}A_0x^-
+	\end{cases}
+\end{equation}
+where 
+$C_0 = [\cos(\theta), \sin(\theta)]^{\top}$ 
+and 
+$B_0 = b_2 [-\sin(\theta), \cos(\theta)]^{\top}$.
+
+Under the transformation of $x = P_0 y$ where 
+$
+P_0 = \begin{bmatrix}
+	   \cos(\theta)   &  \sin(\theta) \\
+	   - \sin(\theta) &  \cos(\theta)  
+     \end{bmatrix}
+$.
+The system is redefined as 
+\begin{equation}
+	\begin{cases}
+		F  & = A_1 x + N_1 \mu
+		\\
+		H(x) & = C_1^{\top}x  
+		\\
+		R(x^-) & = x^- - B_1 C_1^{\top} A_1x^-
+	\end{cases}
+\end{equation}
+whereas 
+$
+A_1 = \begin{bmatrix}
+	\alpha & \omega
+	\\
+	-\omega & \alpha
+\end{bmatrix}
+$
+and 
+$
+C_1 = \mathbf{e}_1
+$
+and 
+$
+B_1 = [0,b_2]^{\top}
+$.
+Using the \cref{th:OB_form_trans} we can find another transformation $y = P \tilde{y}$ such that the system's canonical form is 
+\begin{equation}
+	\begin{cases}
+		F  & = A \tilde{y} + N \mu
+		\\
+		H(\tilde{y})  & = C^{\top} \tilde{y} 
+		\\
+		R(\tilde{y}^-) & = \tilde{y}^- - B C^{\top}A\tilde{y}^-
+	\end{cases}
+\label{eq:OB_canonical_form_2D}
+\end{equation}
+where 
+$
+A = \begin{bmatrix}
+	2 \alpha & 1
+	\\
+	-(\alpha^2 + \omega^2) & 0
+\end{bmatrix}
+$
+and 
+$
+C = \mathbf{e}_1
+$
+and 
+$
+B = [0, \omega b_2]^{\top}
+$, 
+with 
+$
+z = [0, 1/\omega]^{\top},
+$
+and
+$
+P = \begin{bmatrix}
+	1 & 0 
+	\\
+	\alpha/\omega & 1/\omega
+\end{bmatrix}
+$. For simplicity we define 
+\[
+\omega b_2 = (1 + r) 
+\] 
+and the system is now totally determined by $r, \alpha, \omega$.
+
+
+
+
+Now, let us expand the  condition \cref{eq:det_condition} in \cref{eq:OB_canonical_form_2D} by 
+\[
+f(\mu, r,\hat{T}) = -r {\rm e}^{2 \mu \hat{T} } + 1 + \left[ (r - 1) \cos(\hat{T}) + \mu \sin(\hat{T}) (1 + r)\right] {\rm e}^{\mu \hat{T}}
+\]
+where we define $\mu = \alpha/\omega$ and the time is scaled by $\omega$.
+
+If the solution space of $f(\hat{T}) =0 $ is not empty and we can find a set of LCO's solution given by 
+$\hat{T} = T(\mu, r)$.
+By solving $r$ form $f(\hat{T}) =0$  we have 
+\begin{equation}
+	r =\, \frac{\varphi(\hat{T}, \mu)}{\varphi(\hat{T}, -\mu)}  {\rm e}^{-2 \hat{T} \mu} 
+	\label{eq:r_value_cond}
+\end{equation}
+and the $\varphi(\mu,T)$ is a function 
+We introduce the auxiliary function
+\begin{equation}
+	\varphi(\tau,\mu)=1- e^{\mu \tau}(\cos{\tau}-\mu\sin{\tau}), 
+	\; \partial \varphi/\partial{\tau}=e^{\mu\tau}(1+\mu^2)\sin{\tau}
+\end{equation}
+which can be also found in \cite{ANDRONOV1966443}.
+%
+The function $g$ is defined as 
+\[
+g(\tau,\mu) \coloneq \frac{\varphi(\tau, \mu)}{\varphi(\tau, -\mu)}  {\rm e}^{-2 \mu \tau}
+\]
+
+For a given $\mu$,  $r$ being in the range verifies the equivalent  existence condition 
+\cref{eq:r_value_cond}. 
+
+Moreover, the monotonicity of function $g(\tau)$ can be checked via confirming the derivative is semi-positive definitive.
+% 
+\begin{equation}
+	\frac{\partial  g}{\partial  \tau} = \frac{g_1(\tau)}{\varphi(\tau,-\mu)^2} {\rm e}^{-2\mu \tau}
+\end{equation}
+in which 
+\[
+g_1(\tau) = \left[
+\sin(\tau) \mu^2 + 2\mu \cos(\tau) - \sin(\tau)\right]
+{\rm e}^{ - \mu \tau} 
++ 
+\left[
+-\sin(\tau) \mu^2 + 2\mu\cos(\tau) + \sin(\tau)
+\right] {\rm e}^{\mu \tau} - 4\mu
+\]
+Obviously, the sign of $g_1(\tau)$ decides the sign of the derivative. We differentiate it again regarding $\tau$, we have
+\[
+g_2(\tau) \coloneq
+\frac{\partial g_1}{\partial \tau} = -((\mu \sin(\tau) + \cos(\tau)) {\rm e}^{- \mu \tau} + (\mu \sin(\tau) - \cos(\tau)) {\rm e}^{ \mu \tau}) (\mu^2 + 1)
+\]
+and 
+\[
+g_3(\tau) \coloneq
+\frac{\partial g_2}{\partial \tau} =(\mu^2 + 1)({\rm e}^{- \mu \tau} - {\rm e}^{ \mu \tau}) \sin(\tau).
+\]
+
+%> now talk about the initial condition
+The starting point of the orbit is 
+$
+\hat{y} = [1,y_2]^{\top}
+$
+and the velocity is defined by
+\begin{equation}
+\mathcal{V}(\hat{y}) = \mathbf{e}_1^{\top} A \hat{y}
+\end{equation}
+A closed orbit should satisfy the returning condition in SIADS23 as 
+\[
+\mathbf{e}_1^{\top} {\rm e}^{A \hat{T}} \hat{y} = 1
+\]
+which gives 
+\[
+ \mathcal{V} = \omega {\rm e}^{-\mu \hat{T}} \frac{\varphi(\hat{T},\mu) }{\sin(\hat{T})}
+\]
+and 
+\begin{equation}
+	\frac{\partial \mathcal{V}}{\partial \tau} = \omega \frac{\varphi(\tau,-\mu)}{\sin^2(\tau)}
+\end{equation}
+The incoming velocity is given by
+\[
+v_{in} = -\omega {\rm e}^{\mu \hat{T}} \frac{\varphi(\hat{T},-\mu)}{\sin(\hat{T})}
+\]
+and 
+\begin{equation}
+	\frac{\partial \mathcal{V}}{\partial \tau} = -\omega \frac{\varphi(\tau,\mu)}{\sin^2(\tau)}
+\end{equation}
+% All the functions $g, g_1, g_2, g_3$ are defined 
+ For $\mu < 0$, $g_3$
+ 
+
+\appendix
+\renewcommand{\theequation}{\Alph{section}.\arabic{equation}}
+\renewcommand{\thesubsection}{\Alph{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\Alph{section}.\arabic{subsection}.\arabic{subsubsection}}
+\renewcommand{\thefigure}{\Alph{section}.\arabic{figure}}
+\renewcommand{\thetable}{\Alph{section}.\arabic{table}}
+\clearpage
+
+\clearpage
+\bibliographystyle{alpha}
+\bibliography{sample}
+
+\end{document}
