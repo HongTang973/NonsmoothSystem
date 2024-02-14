@@ -1,15 +1,4 @@
 %> test the composed_map function
-% clc
-close all
-% clear
-%> so the input should be the problem and the parameter vector
-SN_point_admis  = [-0.1 - 0.2i,-0.1 + 0.2i,-0.5,1.78192697900802,1.6,5.84691856641790 ];
-
-%> the point hitted by the line continuation
-SN_point_admis  = [-0.1	0.2	-0.525014022367497	1.87753996111232	1.6	4.795364374429504];
-
-
-
 equi_type       = 1;
 %>
 [A,B,C,R, T_2_det]  = par2NForm_Lienard(SN_point_admis);

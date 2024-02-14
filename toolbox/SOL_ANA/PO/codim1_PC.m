@@ -19,7 +19,7 @@
 % par:              give the para meter vector
 % p_span:           specify the range of parameter to be continued
 % dir:              specify the direction of the solution branch
-function varargout = codim1_PC(prob)
+function varargout  = codim1_PC(prob)
 
 % function [u,iter] = codim1_PC(prob)
 %
@@ -36,12 +36,8 @@ bifur_detct         = prob.bifur_detct;
 NumOfEvents         = prob.Events.NumOfEvents;
 MonitorFunctions    = prob.Events.MonitorFunctions;
 Events_tag          = prob.Events.tag;
-lab =[];
-lab                 = [lab;'SP']; %> 0 for plain points; 1 for SN points; -1 for the PD points
-if bifur_detct
-    Monitor_fval    = [];
-    Monitor_fval        =  [ Monitor_fval, MonitorFunctions(prob,par)];
-end
+lab                 = {};             %> 0 for plain points; 1 for SN points; -1 for the PD points
+Monitor_fval        = [];
 
 %
 if isvector(par)
@@ -66,7 +62,9 @@ else
     default_h = 0.001;
 end
 
-dh = min(default_h,(p_span(2)-p_span(1))/200);
+dh = min(default_h,(p_span(2)-p_span(1))/prob.N_points);
+%> added on 1/12/2023
+dh = max(dh,prob.min_h);
 
 % DETERMINE THE LOCATION of the parameter's partial derivative
 index = [ind_p,ind_x];
@@ -123,27 +121,30 @@ u = par; % container of the  parameter track
 
 iter = [];
 
-
-
 [prob_det] = ZeroFunctions (par);
 
 if norm(prob_det) > 5e-9
     fprintf( 'Not zero parameter point! \n' )
     % correct the initial condition
-    [u,~,~,~] = corrector(ZeroFunctions,par, par, ind_p, ind_x,0,0);
+     
+    [u,iter,~,~] = corrector(prob,par, par,0,0);
     par                 =  u(:,end);
     if bifur_detct
     Monitor_fval        =  [ Monitor_fval, MonitorFunctions(prob,u(:,end))];
+    lab                 =  [lab;'WSP'];
     lab                 =  [lab;'SP'];
     end
     fprintf('The SP is relocated at curve with evalf f = %g \n',ZeroFunctions (par))
+else  %> addmit the starting point status for the 
+    if bifur_detct
+        lab                 =  [lab;'SP'];
+        Monitor_fval        =  [ Monitor_fval, MonitorFunctions(prob,par)];
+    end
+    
 end
 %
 
 % ##### Step 2: get the Jacobian
-% par = {'U', 'r', 'damp_1','damp_2', 'damp_3', 'T'}
-
-
 
 [t_,~] = get_jacobian(ZeroFunctions, par, index);
 % get the tangent vector induced by the Jacobian
@@ -163,16 +164,16 @@ trans_flag =  norm(t_);
 reg = u(ind_p,end)>=p_span(1) && u(ind_p,end)<=p_span(2)...
     && all(u(ind_x,end)-x_span(:,1)>=0) && all(x_span(:,2)-u(ind_x,end)>=0);
 
-new_par = u(:,end); dis2init = [1,1];
+new_par = []; dis2init = [1,1];
 nstep   = 1;
 while trans_flag && reg && nstep < uplim_step   
     % first predictor
     % using the tangent vector produced by the Jacobian
-    new_par = Predictor(new_par,index,ind_p,t_,dh,dir,dis2init);
+    new_par = Predictor(prob,u(:,end),t_,dh,dis2init);
     % corrector: now the newly predicted point in parameter space, but this 
     % should be corrected by iteration
     num = 1;
-    [u,iter,dis2init,iscirc,discre_err] = corrector(ZeroFunctions,u, new_par, ind_p, ind_x,num,iter);
+    [u,iter,dis2init,iscirc,discre_err] = corrector(prob,u, new_par,num,iter);
     fprintf('Convergence to %3f with iter %d times with err %g! \n', u(ind_p,end),iter(end),discre_err);
     %>  added on 16/10/2023 ----- Event monitor 
     if bifur_detct
@@ -206,11 +207,21 @@ while trans_flag && reg && nstep < uplim_step
             discre_err_last_step = discre_err(end);     discre_err(end) =[];
             %> to locate the bifurcation point
             event_tag = Events_tag(bull_events_check < 0);
-            if sum(bull_events_check < 0)>1;  keyboard;error('Two events happening at the same time! \n'); end
+            if sum(bull_events_check < 0)>1;  keyboard;warning('Two events happening at the same time! \n'); end
             %> the intermediate value should be find to locate the exact
             %> bifur point
             ind = bull_events_check < 0; %> this is the unit vector to select the function
-            Event_fun = @(par) (ind'* MonitorFunctions(prob, par))^2;
+            %> added on 5/12/2023 to consider accurately locate the CR
+            %> event 
+            if strcmp(event_tag{1},'SN')||strcmp(event_tag{1},'PD')
+                 Event_fun = @(par) (ind'* MonitorFunctions(prob, par))^2;
+            else
+                %> debug
+%                 if strcmp(event_tag{1},'CR')
+%                     keyboard
+%                 end
+                 Event_fun = @(par) ind'* MonitorFunctions(prob, par);
+            end
             Bifur_zero_Fcns = @(par) [ZeroFunctions(par);Event_fun(par)];
             %> use the newton method in the corrector step to sove the zero
             %> solution
@@ -218,32 +229,32 @@ while trans_flag && reg && nstep < uplim_step
             %> use the iteration process to get the critical point of PD/SN
             %------------------------------------------------------ %
             new_par     =  u_last_step;
-            [prob_det]  =  Bifur_zero_Fcns (new_par);
-            dis         =  norm(prob_det);
+            [bifur_loc] =  Bifur_zero_Fcns (new_par);
+            dis         =  norm(bifur_loc);
             num         = 1;
             
-            while dis  > 1e-4
-                [prob_det] =  Bifur_zero_Fcns (new_par);
-                dis = norm(prob_det);
+            while dis  > 1e-9
+                [bifur_loc] =  Bifur_zero_Fcns (new_par);
+                dis = norm(bifur_loc);
                 [~,J] = get_jacobian( Bifur_zero_Fcns, new_par, index);
-                alt = -real(J'*inv(J*J')*prob_det);
+                alt = -real(J'*inv(J*J')*bifur_loc);
                 num = num +1;
-                if norm(alt)>1e1
+                if norm(alt)>1e1 %> avoid singular prediction
                     keyboard
                     alt = alt./norm(alt)/100;
                 end
                 new_par(index) = new_par(index) + alt;  
             end
+            fprintf('The event %s is located with %g iterations with tol %g! \n',event_tag{1},num,dis);
             %------------------------------------------------------ %
             %> record 
             discre_err = [discre_err, dis];
             iter       = [iter, num];
             u          = [u, new_par];
             dis2init   = [dis2init, dis2init_last_step];
-            %             [u,iter,dis2init,iscirc,discre_err] = corrector(Bifur_zero_Fcns,u, u_last_step, ind_p, ind_x,1,iter);
-            %> record this extra interpolated point with tag
+          %> record this extra interpolated point with tag
             Monitor_fval  = [Monitor_fval, MonitorFunctions(prob,u(:,end))];
-            lab           = [lab; event_tag];
+            lab           = [lab; event_tag{end}];
 
             %> record the ending point before the interpolation
             u             = [u,        u_last_step];
@@ -259,7 +270,7 @@ while trans_flag && reg && nstep < uplim_step
             event_tag = {S_US};
             %> append the monitor function values in the buffing
             Monitor_fval  = [Monitor_fval, Events_favls];
-            lab           = [lab; event_tag];
+            lab           = [lab; event_tag{end}];
         end
                    
     end
@@ -272,6 +283,13 @@ while trans_flag && reg && nstep < uplim_step
         && all(u(ind_x,end)-x_span(:,1)>=0) && all(x_span(:,2)-u(ind_x,end)>=0);
     %>
     nstep  = nstep + 1;
+    if nstep == uplim_step
+        warning('MAX step has been reached!')
+    end
+    %> debug 
+    if bifur_detct && size(u,2)~= size(lab,1)
+        keyboard
+    end
 end
 
 %> output:
@@ -281,71 +299,8 @@ if nargout >= 3; varargout{3}  = lab;           end
 if bifur_detct && nargout >= 4; varargout{4}  = Monitor_fval;           end
 
 
-%> ------------- built in funcitons -------------------------- %
-
-function new_par = Predictor(new_par,index,ind_p,t_,dh,dir,dis2init)
-
-if abs(t_(1))<1e-2  % turning point
-    % the index =1, since we put the parameter in the first place when
-    % we get our jacobian
-    
-    dh = max( 1e-3, min(0.02*dh, 0.1*abs(dis2init(1))));
-    K = null(t_');
-    co = [1;rand(length(t_)-1,1)];
-    %> strategy 1
-    co = co/norm(co);
-    % new searching direction
-    t_ = [t_,K]*co;
-    
-elseif  abs(dis2init(1))<2*dh && sign(dis2init(1)*t_(1))<0 && dis2init(2)<1e-3
-    % the second condition is the loop returning conditon to prevent the
-    % low starting speed at first steps
-    % dh = min(dh*0.1,0.5*abs(dis2init(1))*new_par(ind_p));
-    dh = min(dh*0.1, 0.001);
-    
-else
-    % plain predictor step
-    
-end
-new_par(index) = new_par(index) + dir * dh* t_;
 
 
-%%
-function [u,iter,dis2init,iscirc,discre_err] = corrector(ZeroFunctions,u, new_par, ind_p, ind_x,num,iter)
-index   = [ind_p,ind_x];
-par     = u(:,1); % the first point
-while 1
-    [prob_det] = ZeroFunctions (new_par);
-
-    [~,J] = get_jacobian(ZeroFunctions, new_par, index);
-
-    alt = -real(J'*inv(J*J')*prob_det);
-    
-    new_par(index) = new_par(index) + alt;
-
-    num = num + 1;
 
 
-    % check convergence
-    discre_err = norm(prob_det);
-    if  discre_err <= 1e-12 || num >=100
-
-        u = [u,new_par];
-        iter = [iter,num];
-
-
-        % incase a closed circle solution
-        dis2init = [(new_par(ind_p)-par(ind_p))/(1+norm(par(ind_p)));
-            norm(new_par(ind_x)-par(ind_x))/norm(par(ind_x))] ;
-
-        iscirc = norm(new_par(index)-par(index))/(1+norm(par(index)))>1e-12;
-
-        if num >=100
-            fprintf('Iteration times limited!! with %d',norm(prob_det))
-        end
-
-        %
-        break;
-    end
-end
 

@@ -62,4 +62,7 @@ end
 if JV(C>0)
     IC = JV./JV(C>0);
     IC = real(IC*equi_type);
+else
+    sprintf('No IC returned!')
+    keyboard
 end

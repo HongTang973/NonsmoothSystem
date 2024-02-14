@@ -25,7 +25,7 @@ else
     IPC_num_allowed =1;
 end
 %> I ---- operator one: the flow evolution
-timespan = [0 T];
+timespan = 1.2*[0 T];
 
 %> define the event function
 EventFun = prob.efunc;

@@ -19,10 +19,12 @@ prob.Events.NumOfEvents         = 6;
 prob.Events.MonitorFunctions    = @SN_PD_MonitorFcns;
 prob.Events.tag                 = {'SN';'SN';'SN';'PD';'PD';'PD'};
 % ---------------------------------------------------
+prob.N_points   = 100;
 prob.uplim_step = 4000;
 prob.ind_p  =    4;
 prob.ind_x  =    [3,6];
 prob.dir    =    1;
+prob.min_h  =    1e-4;
 prob.co_dh  =    1e-1;
 prob.p_span = [0.8*par_SN_init(4) 1.1*par_SN_init(4)];
 prob.x_span = [-0.6 -0.4; 3 10];

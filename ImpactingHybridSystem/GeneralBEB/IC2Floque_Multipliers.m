@@ -7,9 +7,18 @@ F_ls = @(y) A*y;
 x_0 = inv(R)*x_00;
 %> consider the correction of the saltation matrix
 correction = ((F_ls(x_00)-R*F_ls(x_0))*C)/(C*F_ls(x_0));
+
+
 P =R + correction;
 Mono_A = R*expm(A*T);
+[prob_det] = det(Mono_A - eye(length(C)));
+if norm(prob_det) > 5e-9
+    fprintf( 'Not zero parameter point with det %g! \n',prob_det)
+    % correct the initial condition
+end
+
 PA = P*expm(A*T);
+
 [V1,D1]=eig(Mono_A);
 Mono_p =diag(D1);
 [V2,D2]=eig(PA);
