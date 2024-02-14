@@ -6,7 +6,7 @@
 % tspan : define the time span of the integration
 % Initcond : the initial condition
 % Modified by Peter Tang, 23rd/Feb/2022
-function [tout,yout,yeout0,teout,yeout,ieout]=...
+function [tout,yout,yeout0,teout,yeout,ieout,BeStuck]=...
     Single_DS_IHS_INTEGRATION(prob)
 %> input: prob
 
@@ -66,7 +66,7 @@ ieout   = [];
 Event_flag=[];
 
 % check if start at the boundary
-if abs(C*y0-prob.equi_type)<1e-3 && C*f_odes(0,y0)>0
+if abs(C*y0-prob.equi_type)<1e-6 && C*f_odes(0,y0)<=1e-9
     [tstart,y0,BeStuck,tout,yout]=Post_impact(prob, y0,tout,yout);
 end
 % post_impact(prob,x,tout,yout) -- syntac
@@ -94,10 +94,8 @@ while tout(end)<tfinal
     
     if BeStuck==false
         % Solve until the first terminal event: hit the boundary.
-        [t,y,te,ye,ie] = ode45(@(t,y) f_odes(t,y),...
-            timespan,y0,options);
-        %         options = odeset(options,'InitialStep',t(end)-t(end-1));
-        options = odeset(options,'InitialStep',1e-4*stepsize,'MaxStep',1e-2*stepsize);
+        [t,y,te,ye,ie] = ode45(@(t,y) f_odes(t,y),timespan,y0,options);
+        options = odeset(options,'InitialStep',1e-2*stepsize,'MaxStep',stepsize);
         %         disp('hit the boundary one time')
 
         Event_flag='x0';
@@ -107,9 +105,13 @@ while tout(end)<tfinal
         while check_discre<1e-6
             % In this case, failure may be due to static equilbrium point
             % in phase space(fixed point)
-            t_flow= A*y0;
+            try
+            t_flow= f_odes(0,y0);
+            catch ME
+                keyboard
+            end
             if norm(t_flow)<1e-6
-                disp('fixed point')
+                % disp('fixed point')
                 BeStuck=true;
                 break
             end
@@ -147,7 +149,7 @@ while tout(end)<tfinal
         yeout0 = [yeout0; y0];
     end
     %evaluate new initial condition for next integration step if possible
-    if isempty(ie)
+    if isempty(ie) || abs(tout(end) - timespan(end))<10*eps
         % means that no event detected and the integration finished till
         % the time destination, so just end the intgration and return
         % result to the mainfunction
@@ -155,7 +157,7 @@ while tout(end)<tfinal
     elseif BeStuck == true
         % if previous integration is sliding, then it shows the sliding
         % stoped, continue integration
-        y0    = y(nt,:);
+        y0    = y(nt,:)';
         tstart = t(nt);
         BeStuck = false; % stuck over
         continue

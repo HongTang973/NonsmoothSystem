@@ -32,7 +32,7 @@ C       = prob.OB_C;
 % dim_sys : the dimension of the system
 dim_sys        = length(x_p);
 dim_par        = length(sys_par);
-N_loop      = 100;
+N_loop         = 100;
 
 v = prob.fixed_point.v;
 w = prob.fixed_point.w;
