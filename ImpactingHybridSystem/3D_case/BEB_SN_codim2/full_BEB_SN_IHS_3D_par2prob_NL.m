@@ -29,8 +29,10 @@ prob.IC = sign(C*A*IC)*IC;
 % C00 = [0.0800   -0.4243    0.5279;
 %     0.4138   -0.1710    0.6364;
 %     0.9990   -0.0703   -0.7996];
-C00 = -0.1*[0.25 0.1 0.2; 0 -0.2 0.15;0.15 0.2 -0.1];
-B00 =0.01* [   -0.6438    0.0438   -0.5821;
+scale_1     = 1;%-0.1; 
+scale_2     = 1;% 0.01; 
+C00 = scale_1*[0.25 0.1 0.2; 0 -0.2 0.15;0.15 0.2 -0.1];
+B00 = scale_2* [   -0.6438    0.0438   -0.5821;
    -0.2807   -0.3283    0.8103;
    -0.8866   -0.6487    0.3508];
 
@@ -47,12 +49,13 @@ prob.fs    = 20;
 %> 
  prob.C     = C;
 %> define  the function to get the accelaration in the observed coordinate
-prob.ax_Fcn = @(t,y) C*f_ls(0,f_ls(0,y));
-prob.Wx_Fcn = @(y) -B;
-prob.rx_Fcn = @(x) par(4)+par(8)-1;
-
-prob.Impact_map  = @(x) x - B*C*A*x; 
-
+prob.ax_Fcn             = @(t,y) C*get_DF_DX(f_ls, y, [1 2 3])*f_ls(0,y);
+%
+prob.Wx_Fcn             = @(y)  -B;
+prob.bx_Fcn             = @(y) C*get_DF_DX(f_ls, y, [1 2 3])*B;
+prob.rx_Fcn             = @(x) par(4)+par(8)-1;
+prob.Impact_map         = @(x) x - B*C*f_ls(0,x); 
+%
 prob.Post_impact_Fcn = @Shilnikov_homoclinic_chaos_post_impact;
 
 %% define options

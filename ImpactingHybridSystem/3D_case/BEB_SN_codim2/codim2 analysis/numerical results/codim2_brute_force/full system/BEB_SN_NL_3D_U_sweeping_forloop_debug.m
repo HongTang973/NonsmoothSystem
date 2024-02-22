@@ -11,12 +11,12 @@ close all
 T  = 12000;
 fs = 512;  %> if fs = 0 will save the whole data 
 t_kept = 100;
-Brute_force_run_MIN_T   = 1000;
+Brute_force_run_MIN_T   = 2000;
 Brute_force_run_MAX_T   = T;
 mfile_loc               = erase(mfilename('fullpath'),mfilename());
 folder_2_save           = [mfile_loc,sprintf('BEB_SN_3D_IHS_codim2_U_%s_P2',date)];
 if ~exist(folder_2_save, 'dir'); mkdir(folder_2_save); end
-save_data_per_run       = 1;
+save_data_per_run       = 0;
 nordmark_vth            = 1e-6;
 %
 index 		=  [7;8]; %> the location of the flight velocity and the r
@@ -35,5 +35,5 @@ p1_care_list    = 0.01;
 
 BEB_SN_NL_3D_U_sweeping_forloop;
 
-copyfile([mfilename('fullpath'),'.m'],folder_2_save);
-save(strcat(folder_2_save,['\',sprintf('BEB_SN_3D_IHS_codim2_U_%s_P2',date)]))
+% copyfile([mfilename('fullpath'),'.m'],folder_2_save);
+% save(strcat(folder_2_save,['\',sprintf('BEB_SN_3D_IHS_codim2_U_%s_P2',date)]))
