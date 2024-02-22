@@ -10,7 +10,7 @@ close all
 %%  define the parameter range interested --- 1D  parameter sweeping
 T  = 12000;
 fs = 512;  %> if fs = 0 will save the whole data 
-t_kept = 500;
+t_kept = 100;
 Brute_force_run_MIN_T   = 1000;
 Brute_force_run_MAX_T   = T;
 mfile_loc               = erase(mfilename('fullpath'),mfilename());
@@ -31,7 +31,7 @@ p1_up_limit     = p_span(2);
 p1_bot_limit    = p_span(1);
 delta_1         = 0.01;
 p1_care_list    = p1_bot_limit:delta_1:p1_up_limit;
-p1_care_list    = -0.024;
+p1_care_list    = 0.01;
 
 BEB_SN_NL_3D_U_sweeping_forloop;
 

@@ -35,5 +35,5 @@ p1_care_list    = p1_bot_limit:delta_1:p1_up_limit;
 
 BEB_SN_3D_U_sweeping_forloop;
 
-copyfile([mfilename('fullpath'),'.m'],folder_2_save);
-save(strcat(folder_2_save,['\',sprintf('BEB_SN_3D_IHS_codim2_U_%s_P2',date)]))
+% copyfile([mfilename('fullpath'),'.m'],folder_2_save);
+% save(strcat(folder_2_save,['\',sprintf('BEB_SN_3D_IHS_codim2_U_%s_P2',date)]))

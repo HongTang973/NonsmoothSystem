@@ -160,7 +160,7 @@ while tout(end)<tfinal
         % stoped, continue integration
         y0    = y(nt,:)';
         tstart = t(nt);
-        if ie == 2; break; end
+        ifend
         BeStuck = false; % stuck over
         continue
     end
