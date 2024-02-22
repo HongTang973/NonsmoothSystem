@@ -92,7 +92,7 @@ h2_0 = plot3(pe(1)-1,pe(2),pe(3),'ro','linewidth',2,'markerfacecolor','black','d
 % patch
 box0_x = [0.034 0.049 0.049 0.034 0.034]*0;
 box0_y = [-0.5 2.5 2.5 -0.5 -0.5 ];
-box0_z = [-0.6 -0.6 0.6 0.6 -0.6 ]
+box0_z = [-0.6 -0.6 0.6 0.6 -0.6 ];
 
 V_0 = [box0_x(1), box0_y(1),box0_z(1);
     box0_x(2), box0_y(2),box0_z(2);
