@@ -25,11 +25,11 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.3647868"
-     inkscape:cx="259.38118"
-     inkscape:cy="124.56158"
-     inkscape:window-width="2304"
-     inkscape:window-height="1262"
-     inkscape:window-x="-11"
+     inkscape:cx="259.38117"
+     inkscape:cy="169.25721"
+     inkscape:window-width="1920"
+     inkscape:window-height="1046"
+     inkscape:window-x="2293"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
@@ -398,17 +398,12 @@
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.11666, 2.11666;stroke-dashoffset:0;stroke-opacity:1;marker-mid:url(#Arrow1Mend)"
-       d="m 98.631546,48.578512 c 0,0 -7.577865,7.854082 -17.014706,9.77462 -4.783974,0.97361 -26.217014,-3.183245 -26.217014,-3.183245"
-       id="path38009"
-       sodipodi:nodetypes="csc" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.11666, 2.11666;stroke-dashoffset:0;stroke-opacity:1;marker-mid:url(#Arrow1Mend)"
-       d="m 104.1051,47.496735 c 0,0 -14.399134,17.669 -23.799967,19.27398 -13.365221,2.28181 -31.45189,-9.5807 -31.451348,-9.580768"
+       d="m 104.1051,47.496735 c 0,0 -13.817541,13.403987 -23.218374,15.008967 -13.365221,2.28181 -25.48744,-7.335746 -25.486898,-7.335814"
        id="path38009-6"
        sodipodi:nodetypes="csc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.11666, 2.11666;stroke-dashoffset:0;stroke-opacity:1;marker-mid:url(#Arrow1Mend)"
-       d="m 112.05353,45.558094 c 0,0 -20.990511,26.586755 -30.391349,28.191735 C 68.29696,76.031639 41.874129,57.190014 41.874671,57.189946"
+       d="m 112.05353,45.558094 c 0,0 -21.959832,24.06652 -31.36067,25.6715 C 67.327639,73.511404 48.853243,57.190015 48.853785,57.189947"
        id="path38009-6-4"
        sodipodi:nodetypes="csc" />
     <g

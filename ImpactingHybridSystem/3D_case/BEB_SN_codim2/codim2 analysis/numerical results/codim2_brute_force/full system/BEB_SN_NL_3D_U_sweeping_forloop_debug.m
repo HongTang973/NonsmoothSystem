@@ -31,7 +31,8 @@ p1_up_limit     = p_span(2);
 p1_bot_limit    = p_span(1);
 delta_1         = 0.01;
 p1_care_list    = p1_bot_limit:delta_1:p1_up_limit;
-p1_care_list    = 0.01;
+p1_care_list    = 0.009;
+% p1_care_list    = 0*-0.0497;
 
 BEB_SN_NL_3D_U_sweeping_forloop;
 

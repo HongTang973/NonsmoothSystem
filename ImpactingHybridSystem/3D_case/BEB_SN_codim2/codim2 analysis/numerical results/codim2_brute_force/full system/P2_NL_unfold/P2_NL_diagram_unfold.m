@@ -1,4 +1,4 @@
-load('.\P2_NL_brute_force_diagram.mat')
+% load('.\P2_NL_brute_force_diagram.mat')
 
 close all
 
@@ -22,7 +22,7 @@ data(data<=1e-5) = NaN;
 plot(A_diagram(:,1)+PD_U,data,'k.','markersize',6)
 h0 = plot(0,0,'k-','linewidth',3,'markersize',6,'displayname','Stable LCO');
 hold on
-
+ylim([0 0.5])
 % Color region  to zoom in
 box1_x = [BEB_U BEB_U PD_U PD_U BEB_U];
 box1_y = [-0.1 0.16 0.16 -0.1 -0.1 ];

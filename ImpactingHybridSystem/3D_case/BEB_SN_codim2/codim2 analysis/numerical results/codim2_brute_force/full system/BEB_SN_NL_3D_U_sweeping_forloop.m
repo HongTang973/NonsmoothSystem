@@ -40,10 +40,15 @@ for i = 1:length(par_1_list)
     %
     prob = full_BEB_SN_IHS_3D_par2prob_NL(point_1);
     %
+    if exist('IC','var')
+        prob.IC   = IC;
+    end
+    %
     prob.v_th = nordmark_vth;
     [tout,yout,yeout0,teout,yeout,ieout,run_info]=...
         brute_force_blow_up_Shilnikov_DNS_SD_int_solver(prob,t_kept,Brute_force_run_MIN_T, Brute_force_run_MAX_T);
-
+    %> update the IC from the last simulation run
+    IC        = yeout(1,:)';
     %> initialize the buffer variables for single run
     %% >  save the data per run
     if save_data_per_run
