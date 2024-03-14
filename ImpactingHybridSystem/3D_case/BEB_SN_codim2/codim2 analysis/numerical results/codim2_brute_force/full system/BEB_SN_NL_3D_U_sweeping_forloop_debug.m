@@ -11,7 +11,7 @@ close all
 T  = 12000;
 fs = 512;  %> if fs = 0 will save the whole data 
 t_kept = 100;
-Brute_force_run_MIN_T   = 2000;
+Brute_force_run_MIN_T   = 5000;
 Brute_force_run_MAX_T   = T;
 mfile_loc               = erase(mfilename('fullpath'),mfilename());
 folder_2_save           = [mfile_loc,sprintf('BEB_SN_3D_IHS_codim2_U_%s_P2',date)];

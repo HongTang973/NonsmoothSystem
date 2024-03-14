@@ -6,8 +6,8 @@ function [A,B,C,R,T_2_det] = par2NForm_DummyVar(par)
 
 %> use the normal form parameters to form the matrixes
 % par(1) = par(1) + par(8);
-par(4) = par(4) + par(8);
 par(3) = par(3) - par(7);
+par(4) = par(4) + par(8);
 % par(5) = par(5) + par(7);
 
 
