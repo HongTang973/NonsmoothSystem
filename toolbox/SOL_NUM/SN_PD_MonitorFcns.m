@@ -53,9 +53,9 @@ S_US_ctr_err   = 1e-6;
 S_US_indicator = Salt_p;
 S_US_indicator(ind_trivial_multiplier) = [];
 %> debug
-if any(abs(S_US_indicator)> 10)
-    keyboard
-end
+% if any(abs(S_US_indicator)> 10)
+%     keyboard
+% end
 %> determine the stability of the LCO
 if any(abs(S_US_indicator)> 1 + S_US_ctr_err )
     S_US = 'US';

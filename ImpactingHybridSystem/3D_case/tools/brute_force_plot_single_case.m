@@ -2,8 +2,7 @@
 close all
 
 %%
-% load('brute_force_run_p_-0.0555_data.mat')
-% name1 ='3D_BEB_PD_codim2_portrait_0.0445.pdf';
+% load('brute_force_run_p_-0.0555_data.mat')0% name1 ='3D_BEB_PD_codim2_portrait_0.0445.pdf';
 figure
 plot(tout, yout(:,1))
 %
@@ -31,5 +30,5 @@ for i =1:2:length(xtick)
     x_new_label{i}= sprintf('%g',xtick(i));
 end
 set(gca,'XTickLabel',x_new_label);
-
+name1 = '-0.060696.pdf'
 % exportgraphics(FIG1, name1,'ContentType','vector')

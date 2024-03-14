@@ -41,10 +41,7 @@ prob.IC = sign(C*A*IC)*IC;
 % -- bilinear term:     y.*y(index)
 % -- quadratic term:    y.*y
 index = [2 3 1];
-% C00 = [0.0800   -0.4243    0.5279;
-%     0.4138   -0.1710    0.6364;
-%     0.9990   -0.0703   -0.7996];
-
+%% this is the orginally proposed case 
 scale_1     = 1;%-0.1; 
 scale_2     = 0.3;% 0.01; 
 scale_3     = 0.3;% 0.01; 
@@ -64,7 +61,25 @@ C00 = scale_3* [0.25*4     0       0;
                 -0.5    -0.3   0.35;
                 0.45   -0.6   0.1];
 
+%% The proposed case is choosen after discussion with David
+scale_1     = 1;%-0.1; 
+scale_2     = 1;% 0.01; 
+scale_3     = 1;% 0.01; 
+% from the formulae, we conclude that the c22 c23 c33 should be zero to get
+% uniformly linear impact restitution law
 
+A00 = scale_1* [0.5    0    0;
+                0    0    0;
+                0    0    0];
+
+% B00*[x1*x2; x2*x3; x3*x1]
+B00 = scale_2* [-1    0   -1;
+                0    0   0;
+                0    0   0];
+% C00*[x1^2; x2^2; x3^2]
+C00 = scale_3* [0    0   0;
+                0    0   0;
+                0    0   0];
 %> f(t,x) = A(mu,eta)x  + mu*M;
 f_ls                    = @(t,y) A*y + M*mu + mu^2*A00*y + B00*(y.*y(index)) + C00*y.^2;
 %
@@ -73,7 +88,7 @@ prob.odes_Fcn  = f_ls;
 %> the period is around 6 second, so run the simulation for 100 cycles
 prob.tspan  = [0 8000];
 %>
-prob.fs    = 20;
+prob.fs     = 20;
 
 %> 
  prob.C     = C;
