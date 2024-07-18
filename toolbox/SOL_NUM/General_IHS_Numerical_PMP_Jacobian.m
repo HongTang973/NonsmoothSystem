@@ -22,7 +22,7 @@ T_p     = sys_vec(prob.sys_vec_index.Tp_index);
 sys_par = sys_vec(prob.sys_vec_index.sys_par_index);
 IC      = sys_vec(prob.sys_vec_index.IC_index);
 T       = sys_vec(prob.sys_vec_index.T_simu_index);
-C       = prob.OB_C;
+C       = prob.C;
 
 % n_s : the dimension of the system
 n_s         = length(x_p);

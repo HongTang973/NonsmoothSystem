@@ -15,6 +15,7 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proof}{Proof}[theorem]
+\newtheorem{remark}{Remark}[theorem]
 
 \usepackage{paracol}
 \usepackage{graphicx}
@@ -44,7 +45,7 @@ To start from the complexity analysis of general $n$ dimensional piecewise syste
 
 From the \emph{SIADS23}, we reformulate the DIB  problem in 2D impacting hybrid systems.
 
-\begin{lemma}[Topological equivalent lemma]
+\begin{lemma}[Topological equivalence lemma]
 	conclusion is: the Li\'enard form with $C = [1,0]$ and $C^TB = 0$ can describe the general case of the 2D boundary equilibrium bifurcation of impacting hybrid systems.
 	The form is given by
 	$
@@ -107,7 +108,7 @@ the system can be converted to
 	\begin{cases}
 		F  &= A_1 y + N v  \\
 		H(y) &= \mathbf{e_1}^{\top} y \\
-		 R(y^-) &= y^- - B_1 \mathbf{e_1} A y^- ,
+		 R(y^-) &= y^- - B_1 \mathbf{e_1}^{\top} A y^- ,
 	\end{cases}
 \end{equation}
 where $B_1 = P_0^{\top} B_0 = [0,b_2, \cdots, b_n]^{\top}$ and $A_1 = P_0^{\top} A_0 P_0$.
@@ -140,7 +141,7 @@ To derive the condition for the 2D BEB and the LCO's existence and stability.
 
 The existence condition for a LCO in 2D impacting hybrid system is given in [Hong Tang,et al. SIADS23] as
 \begin{equation}
-	 \operatorname{det}(\rm e^{A T} P - I ) =0
+	 \operatorname{det}({\rm e}^{A t} P - I ) =0
 	 \label{eq:det_condition}
 \end{equation}
 
@@ -246,60 +247,180 @@ and the system is now totally determined by $r, \alpha, \omega$.
 
 Now, let us expand the  condition \cref{eq:det_condition} in \cref{eq:OB_canonical_form_2D} by 
 \[
-f(\mu, r,\hat{T}) = -r {\rm e}^{2 \mu \hat{T} } + 1 + \left[ (r - 1) \cos(\hat{T}) + \mu \sin(\hat{T}) (1 + r)\right] {\rm e}^{\mu \hat{T}}
+f(\gamma, r,\hat{T}) = -r {\rm e}^{2 \gamma \hat{T} } + 1 + \left[ (r - 1) \cos(\hat{T}) + \gamma \sin(\hat{T}) (1 + r)\right] {\rm e}^{\gamma \hat{T}}
 \]
-where we define $\mu = \alpha/\omega$ and the time is scaled by $\omega$.
+where we define $\gamma = \alpha/\omega$ and the time is scaled by $t = T/\omega$.
 
 If the solution space of $f(\hat{T}) =0 $ is not empty and we can find a set of LCO's solution given by 
-$\hat{T} = T(\mu, r)$.
+$\hat{T} = T(\gamma, r)$.
 By solving $r$ form $f(\hat{T}) =0$  we have 
 \begin{equation}
-	r =\, \frac{\varphi(\hat{T}, \mu)}{\varphi(\hat{T}, -\mu)}  {\rm e}^{-2 \hat{T} \mu} 
+	r =\, \frac{\varphi(\hat{T}, \gamma)}{\varphi(\hat{T}, -\gamma)}  {\rm e}^{-2 \hat{T} \gamma},
 	\label{eq:r_value_cond}
 \end{equation}
-and the $\varphi(\mu,T)$ is a function 
-We introduce the auxiliary function
+and the multiplier is given by 
 \begin{equation}
-	\varphi(\tau,\mu)=1- e^{\mu \tau}(\cos{\tau}-\mu\sin{\tau}), 
-	\; \partial \varphi/\partial{\tau}=e^{\mu\tau}(1+\mu^2)\sin{\tau}
+	\lambda = \frac{\varphi(\hat{T},\gamma)^2}{\varphi(\hat{T}, -\gamma)^2}  {\rm e}^{-2 \hat{T} \gamma} 
+\end{equation}
+where the $\varphi(\gamma,T)$ is  the auxiliary function
+\begin{equation}
+	\varphi(\tau,\gamma)=1- e^{\gamma \tau}(\cos{\tau}-\gamma\sin{\tau}), 
+	\; \partial \varphi/\partial{\tau}=e^{\gamma\tau}(1+\gamma^2)\sin{\tau}
 \end{equation}
 which can be also found in \cite{ANDRONOV1966443}.
 %
-The function $g$ is defined as 
-\[
-g(\tau,\mu) \coloneq \frac{\varphi(\tau, \mu)}{\varphi(\tau, -\mu)}  {\rm e}^{-2 \mu \tau}
-\]
+We now fix the direction of the equilibrium transition at BEB, where the equilibrium is admissible when $\mu < 0$, boundary equilibrium when $\mu = 0$, pseudo equilibrium when $\mu >0$.
+\begin{lemma}
+	The traveling time $T$ in the free flight is of our concern.
+	When $\mu <0$, $0 \leq T < \pi$;
+When $\mu>0$ , $\pi \leq T< \tau_c$, where $\tau_c$ s.t. $\varphi(\tau_c, \gamma) =0$.
+\end{lemma}
+The function $g$ is defined as
+\begin{equation}
+\label{eq:def_of_r}
+g(\tau,\gamma) \coloneq \frac{\varphi(\tau, \gamma)}{\varphi(\tau, -\gamma)}  {\rm e}^{-2 \gamma \tau}
+\end{equation}
+and the function $m$ is defined as 
+\begin{equation}
+	\label{eq:def_of_mp}
+	m(\tau,\gamma) \coloneq \frac{\varphi(\tau, \gamma)}{\varphi(\tau, -\gamma)}  {\rm e}^{- \gamma \tau}
+\end{equation}
+FOR THE WHOLE RANGE OF -TC 2PI, THE R CURVE IS DECREASING
 
-For a given $\mu$,  $r$ being in the range verifies the equivalent  existence condition 
+\begin{proof}
+For a given $\gamma>0$,  $r$ being in the range verifies the equivalent  existence condition 
 \cref{eq:r_value_cond}. 
-
+Let us now start with a positive $\gamma$.
 Moreover, the monotonicity of function $g(\tau)$ can be checked via confirming the derivative is semi-positive definitive.
 % 
 \begin{equation}
-	\frac{\partial  g}{\partial  \tau} = \frac{g_1(\tau)}{\varphi(\tau,-\mu)^2} {\rm e}^{-2\mu \tau}
+	\frac{\partial  g}{\partial  \tau} = \frac{g_1(\tau)}{\varphi(\tau,-\gamma)^2} {\rm e}^{-2\gamma \tau}
 \end{equation}
 in which 
 \[
 g_1(\tau) = \left[
-\sin(\tau) \mu^2 + 2\mu \cos(\tau) - \sin(\tau)\right]
-{\rm e}^{ - \mu \tau} 
+\sin(\tau) \gamma^2 + 2\gamma \cos(\tau) - \sin(\tau)\right]
+{\rm e}^{ - \gamma \tau} 
 + 
 \left[
--\sin(\tau) \mu^2 + 2\mu\cos(\tau) + \sin(\tau)
-\right] {\rm e}^{\mu \tau} - 4\mu
+-\sin(\tau) \gamma^2 + 2\gamma\cos(\tau) + \sin(\tau)
+\right] {\rm e}^{\gamma \tau} - 4\gamma
 \]
 Obviously, the sign of $g_1(\tau)$ decides the sign of the derivative. We differentiate it again regarding $\tau$, we have
 \[
 g_2(\tau) \coloneq
-\frac{\partial g_1}{\partial \tau} = -((\mu \sin(\tau) + \cos(\tau)) {\rm e}^{- \mu \tau} + (\mu \sin(\tau) - \cos(\tau)) {\rm e}^{ \mu \tau}) (\mu^2 + 1)
+\frac{\partial g_1}{\partial \tau} = -((\gamma \sin(\tau) + \cos(\tau)) {\rm e}^{- \gamma \tau} + (\gamma \sin(\tau) - \cos(\tau)) {\rm e}^{ \gamma \tau}) (\gamma^2 + 1)
 \]
 and 
 \[
 g_3(\tau) \coloneq
-\frac{\partial g_2}{\partial \tau} =(\mu^2 + 1)({\rm e}^{- \mu \tau} - {\rm e}^{ \mu \tau}) \sin(\tau).
+\frac{\partial g_2}{\partial \tau} ={\rm e}^{ \gamma \tau}(\gamma^2 + 1)({\rm e}^{- 2 \gamma \tau} - 1) \sin(\tau).
 \]
+% All the functions $g, g_1, g_2, g_3$ are defined 
+For $\gamma > 0$:
+
+ $g_3<0$ for $0<\tau < \pi$,  $g_3>0$ for $\pi<\tau < 2\pi$, so $g_2$ gets minimum at $\tau =\pi$, and $g_2(\pi) = -(\gamma^2+1)({\rm e}^{\gamma \pi} - {\rm e}^{-\gamma \pi})<0$, $g_2(0) =0$ and $g_2(2\pi) = (\gamma^2+1)({\rm e}^{2\gamma \pi} - {\rm e}^{-2\gamma \pi})>0$, $g_2(\tau_c) = (\gamma^2 + 1)\varphi(-\tau_c, \gamma) >0$. $\exists t_1 \in (\pi, \tau_c)$, $g_2(t_1) = 0$.
+So $g_1$ decreases from 0 to $t_1$, and then increases until $\tau = 2 \pi$, while $g_1(0) =0$ and $g_1(2\pi)=0$, then we have $g_1(\tau)< g_1(0)$ when  $\tau \in (0,t_1)$; $g_1(\tau)< g_1(2\pi)$ when $\tau \in (t_1, 2\pi)$. that's to say $g_1$ is always negative in $(0,2\pi)$.
+
+ $g_3<0$ for $-\pi<\tau < 0$,  $g_3>0$ for $-2\pi<\tau < -\pi$, so $g_2$ gets maximum at $\tau =-\pi$, and $g_2(-\pi) = (\gamma^2+1)({\rm e}^{\gamma \pi} - {\rm e}^{-\gamma \pi})>0$, $g_2(0) =0$ and $g_2(-2\pi) = (\gamma^2+1)({\rm e}^{-2\gamma \pi} - {\rm e}^{2\gamma \pi})<0$, $g_2(-\tau_c) = (\gamma^2 + 1)\varphi(-\tau_c, \gamma) >0$.
+Let's assume $g_2(t_2) =0$ where $t_2 \in (-2\pi, -\pi)$.
+So $g_1$ decreases from $-2\pi$ to $t_1$, and then increases until $\tau =  0$, while $g_1(0) =0$ and $g_1(-2\pi)=0$, so $g_1$ is always negative in $(-2\pi,0)$.
+
+Thus, we prove $g_1$ is always negative so that $g$ is monotonically decreasing throughout the range $(-2\pi, -\tau_c ) \cup (-\tau_c, 2\pi)$ since the $-\tau_c$ is the singular point. 
+
+\end{proof}
+
+FROM 0 - PI, PROVE THE CONVEX FEATURE OF THE MP CURVE -> THE MP>1 WHILE THE R<1 -- IMPOSSIBLE BUT WE CAN PROVE MP>1 IN (0,PI)
+\begin{lemma}
+	\label{lem:geq_unity_lema}
+	If $p,q \in \mathbb{R}$ and $0<|\epsilon| < |p-q|$they are positive. $p = q + \epsilon$  then $p/q>1$ if $\epsilon>0$, and $p/q<1$ if $\epsilon<0$. 
+\end{lemma}
+\begin{proof}
+	This is to prove the $m(\tau, \gamma) > 1 $ when $\tau \in (0, \pi)$ and $m(\tau, \gamma) < 1 $ when $\tau \in (-\pi,0)$.
+	Obviously, $\varphi(\tau,\gamma)>0$ and $\varphi(\tau,-\gamma) > 0$ when $-\tau_c<\tau < \tau_c$. 
+	
+	Let us define 
+	\begin{equation}
+		d(\tau) \coloneq \varphi(\tau,\gamma) - \varphi(\tau,-\gamma) {\rm e}^{ \gamma \tau} = (\mu\sin(\tau) - \cos(\tau) - 1)\exp(\tau \mu) + \mu \sin(\tau) + \cos(\tau) + 1
+	\end{equation}
+and 
+\begin{equation}
+	\dot{d} = \left[ (\mu^2 +1) \sin(\tau) - \mu \right] \exp(\tau \mu) + \cos(\tau)\mu - \sin(\tau)
+\end{equation}
+solve $\dot{d} =0$ we have 
+\begin{equation}
+	\label{eq:subs_exp}
+	\exp(\tau_0 \mu) = \frac{\sin(\tau_0) - \mu \cos(\tau_0)}{ (\mu^2 +1) \sin(\tau_0) - \mu } > 0
+\end{equation}
+by substituting the above equation to (15) and we can get the stationary values of $d$, which is given by 
+\begin{equation}
+	d(\tau_0) =\frac{\mu (\mu^2 + 1) \sin^2(\tau_0)}{ (\mu^2 +1) \sin(\tau_0) - \mu}
+\end{equation}
+Near $\mu =0$, we have 
+$$
+d(\tau) = \frac{\mu(\mu^2 + 1)}{6}\tau^3 + \mathcal{O}(\tau^4), \quad \dot{d}(\tau) = \frac{\mu(\mu^2 + 1)}{3}\tau^2 + \mathcal{O}(\tau^3)
+$$
+\begin{enumerate}
+	\item[*] In the region $[0, \pi]$, $d(0) = 0$ and $d(\pi) =0$, $d(\tau) > 0$ in the near region of origin.
+	%
+	$d(\pi) =0$,  and apparently $\dot{d} = 0$ has sole solution in the $(0, \pi)$.
+	%
+	 $$ \dot{d}(\pi/2) = \left[ (\mu^2 +1)  - \mu \right] \exp(\mu\pi/2 )  - 1 $$
+	  can be easily proven always positive given $\mu>0$,  and $\dot{d}(\pi)= -(1+\mu) \exp{\pi \mu} <0$ so we must have $\pi/2 < \tau_0 < \pi$, thus $\sin(\tau_0) - \mu \cos(\tau_0)>0$ and $(\mu^2 +1) \sin(\tau_0) - \mu >0$ 
+	 based on \cref{eq:subs_exp}.  And we conclude at the stationary point, $d(\tau_0)>0$, so $m(\tau, \gamma) > 1 $ according to \cref{lem:geq_unity_lema} in the whole range $\tau \in (0, \pi)$. 
+	 \item The same proof applies to $(-\pi,0)$.
+\end{enumerate}
+
+\end{proof}
+
+FOR THE WHOLE RANGE OF -TC 0, THE MP CURVE IS POSITIVE SECOND DERIVATIVE
+
+FOR THE WHOLE RANGE OF -TC 0, THE MP CURVE IS NEGATIVE SECOND DERIVATIVE 
+
+\begin{remark}
+	Now we conclude the features of the functions $g(\tau, \gamma)$ and $m(\tau, \gamma)$.
+	\begin{itemize}
+		\item[(i)] $\lim\limits_{\tau \to -\tau_c^+} g(\tau) = + \infty$, $g(-\pi) = \exp(\pi \gamma)$, $g(0) = 1$, $g(\pi) = \exp(-\pi \gamma)$, $g_(\tau_c) =0$.
+		\item[(ii)] $\lim\limits_{\tau \to -\tau_c^+} m(\tau) = + \infty$, $m(-\pi) = 1$, $m(0) = 1$, $m(\pi) = 1$, $m_(\tau_c) =0$.
+		\item[(iii)] $0<m<1$ when $\tau \in (-\pi, 0) \cup (\pi, \tau_c)$;  $m>1$ when $\tau \in (-\tau_c, -\pi) \cup ( 0, \pi)$; 
+		\item[(iv)] $g(\tau, \mu) = g(-\tau, -\mu)$, $g(\tau, -\mu) = g(-\tau, \mu)$, $g(-\tau, \mu) = g(\tau, -\mu)$; $m(\tau, \mu) = m(-\tau, -\mu)$, $m(\tau, -\mu) = m(-\tau, \mu)$, $m(-\tau, \mu) = m(\tau, -\mu)$.
+	\end{itemize}
+\end{remark}
+\begin{remark}
+	Then we can conclude:
+	\begin{enumerate}
+		\item If $\mu >0, \gamma>0$, $\exp(-\gamma \pi)< r < 1$, there exists $\hat{T} \in (0,\pi) $, s.t. $g(\hat{T}, \gamma ) = r$  and $m(\hat{T}, \gamma) > 1$;
+		
+		\item If $\mu >0, \gamma>0$, $1< r < \exp(\gamma \pi)$, there exists $\hat{T} \in (-\pi, 0) $, s.t. $g(\hat{T}, \gamma ) = r$ and $0<m(\hat{T}, \gamma) < 1$.
+		 Using the (iv) condition, if $\underline{\gamma} = - \gamma < 0$, we still have $\underline{\hat{T}} = - \hat{T} > 0$, thus $1< r < \exp(-\underline{\gamma} \pi)$, there exists $\underline{\hat{T}} \in (0,\pi) $, s.t. $g(\underline{\hat{T}}, \underline{\gamma} ) = r$ and $0<m(\underline{\hat{T}}, \underline{\gamma}) < 1$;
+		
+		\item If $\mu <0, \gamma>0$, $0 < r < \exp(-\gamma \pi)$, there exists $\hat{T} \in (\pi, \tau_c) $, s.t. $g(\hat{T}, \gamma ) = r$ a stable LCO with period ranging form $\pi$ to $\tau_c$  and $0<m(\hat{T}, \gamma) < 1$;
+		
+		\item If $\mu <0, \gamma>0$, $r > \exp(\gamma \pi)$, there exists $\hat{T} \in (-\tau_c, -\pi) $, s.t. $g(\hat{T}, \gamma ) = r$  and $m(\hat{T}, \gamma) > 1$; 
+		Using the (iv) condition, if $\underline{\gamma} = - \gamma < 0$, we still have $\underline{\hat{T}} = - \hat{T} > 0$, thus $ r > \exp(-\underline{\gamma} \pi)$, there exists $\underline{\hat{T}} \in (\pi, \tau_c) $, s.t. $g(\underline{\hat{T}}, \underline{\gamma} ) = r$ and $m(\underline{\hat{T}}, \underline{\gamma}) > 1$;
+		
+	\end{enumerate}
+\end{remark}
+%
+\begin{theorem}
+	Then we can conclude the existence and stability of LCO:
+	\begin{enumerate}
+		\item If $\mu >0, \gamma>0$, $\exp(-\gamma \pi)< r < 1$, there exists an unstable LCO with period ranging form $0$ to $\pi$ when $r$ ranges from $1$ to $\exp(-\gamma \pi)$;
+		
+		\item If $\mu >0, \gamma< 0$, $1< r < \exp(-\gamma \pi)$, there exists a stable LCO with period ranging form $0$ to $\pi$ when $r$ ranges from $1$ to $\exp(-\gamma \pi)$;
+		
+		
+		\item If $\mu <0, \gamma>0$, $0< r < \exp(-\gamma \pi)$, there exists a stable LCO with period ranging form $\pi$ to $\tau_c$ when $r$ ranges from  $\exp(-\gamma \pi)$ to $0$;
+		
+		\item If $\mu <0, \gamma<0$, $r > \exp(-\gamma \pi)$, there exists an unstable LCO with period ranging form $\pi$ to $\tau_c$, when $r$ ranges from  $\exp(\gamma \pi)$ to $+ \infty$;
+		
+		\item If $\mu = 0$, there exists a center only if $r = \exp(-\pi \gamma)$ and the period is $\pi$,
+		
+	\end{enumerate}
+\end{theorem}
 
 %> now talk about the initial condition
+TO DETERMINE THE RANGE OF THE TRAVELING TIME T:
 The starting point of the orbit is 
 $
 \hat{y} = [1,y_2]^{\top}
@@ -314,23 +435,170 @@ A closed orbit should satisfy the returning condition in SIADS23 as
 \]
 which gives 
 \[
- \mathcal{V} = \omega {\rm e}^{-\mu \hat{T}} \frac{\varphi(\hat{T},\mu) }{\sin(\hat{T})}
+ \mathcal{V} = \omega {\rm e}^{-\gamma \hat{T}} \frac{\varphi(\hat{T},\gamma) }{\sin(\hat{T})}
 \]
 and 
 \begin{equation}
-	\frac{\partial \mathcal{V}}{\partial \tau} = \omega \frac{\varphi(\tau,-\mu)}{\sin^2(\tau)}
+	\frac{\partial \mathcal{V}}{\partial \tau} = \omega \frac{\varphi(\tau,-\gamma)}{\sin^2(\tau)}
 \end{equation}
 The incoming velocity is given by
 \[
-v_{in} = -\omega {\rm e}^{\mu \hat{T}} \frac{\varphi(\hat{T},-\mu)}{\sin(\hat{T})}
+v_{in} = -\omega {\rm e}^{\gamma \hat{T}} \frac{\varphi(\hat{T},-\gamma)}{\sin(\hat{T})}
 \]
 and 
 \begin{equation}
-	\frac{\partial \mathcal{V}}{\partial \tau} = -\omega \frac{\varphi(\tau,\mu)}{\sin^2(\tau)}
+	\frac{\partial \mathcal{V}}{\partial \tau} = -\omega \frac{\varphi(\tau,\gamma)}{\sin^2(\tau)}
 \end{equation}
-% All the functions $g, g_1, g_2, g_3$ are defined 
- For $\mu < 0$, $g_3$
- 
+
+\section{Saddle/node case}
+For a saddle case, we have the general form 
+\begin{equation}
+	\begin{cases}
+		F &= \begin{bmatrix}
+			\lambda_1 & 0
+			\\
+			0  & \lambda_2
+		\end{bmatrix} x + N_0 \mu
+		\\
+		H(x) &= C_0^{\top}x  
+		\\
+		R(x^-) &= x^- - B_0 C_0^{\top}A_0x^-
+	\end{cases}
+\end{equation}
+where 
+$C_0 = [\cos(\theta), \sin(\theta)]^{\top}$ 
+and 
+$B_0 = b_2 [-\sin(\theta), \cos(\theta)]^{\top}$. 
+
+Under the transformation of $x = P_0 y$ where 
+$
+P_0 = \begin{bmatrix}
+	\cos(\theta)   &  \sin(\theta) \\
+	- \sin(\theta) &  \cos(\theta)  
+\end{bmatrix}
+$.
+The system is redefined as 
+\begin{equation}
+	\begin{cases}
+		F  & = A_1 x + N_1 \mu
+		\\
+		H(x) & = C_1^{\top}x  
+		\\
+		R(x^-) & = x^- - B_1 C_1^{\top} A_1x^-
+	\end{cases}
+\end{equation}
+whereas 
+$
+A_1 = \begin{bmatrix}
+	\lambda_1 \cos^2(\theta) +  \lambda_2 \sin^2(\theta) & - \cos(\theta) \sin(\theta) (\lambda_1 - \lambda_2)
+	\\
+	- \cos(\theta) \sin(\theta) (\lambda_1 - \lambda_2) & \lambda_1 \sin^2(\theta) +  \lambda_2 \cos^2(\theta)
+\end{bmatrix}
+$
+and 
+$
+C_1 = \mathbf{e}_1
+$
+and 
+$
+B_1 = [0,b_2]^{\top}
+$.
+Using the \cref{th:OB_form_trans} we can find another transformation $y = P \tilde{y}$ such that the system's canonical form is 
+\begin{equation}
+	\begin{cases}
+		F  & = A \tilde{y} + N \mu
+		\\
+		H(\tilde{y})  & = C^{\top} \tilde{y} 
+		\\
+		R(\tilde{y}^-) & = \tilde{y}^- - B C^{\top}A\tilde{y}^-
+	\end{cases}
+	\label{eq:OB_canonical_form_2D}
+\end{equation}
+where 
+$
+A = \begin{bmatrix}
+	\lambda_1 + \lambda_2 & 1
+	\\
+	-\lambda_1 \lambda_2 & 0
+\end{bmatrix}
+$
+and 
+$
+C = \mathbf{e}_1
+$
+and 
+$
+B = [0,  \hat{\omega} b_2]^{\top}
+$, 
+with 
+$
+\hat{\omega} = - \cos(\theta) \sin(\theta) (\lambda_1 - \lambda_2), \quad z = [0, -1/\hat{\omega}]^{\top},
+$
+and
+$
+P = \begin{bmatrix}
+	1 & 0 
+	\\
+	\alpha/\hat{\omega} & 1/\hat{\omega}
+\end{bmatrix}
+$. For simplicity we define 
+\[
+\hat{\omega} b_2 = (1 + r) 
+\] 
+and the system is now totally determined by $r, \alpha, \omega$.
+
+
+
+
+Now, let us expand the  condition \cref{eq:det_condition} in \cref{eq:OB_canonical_form_2D} by 
+\[
+f(\hat{T}) = -r (\lambda_1 - \lambda_2){\rm e}^{(\lambda_1 + \lambda_2) \hat{T} } + (r \lambda_1 + \lambda_2){\rm e }^{  \lambda_1 \hat{T} } - (r \lambda_2 + \lambda_1) {\rm e}^{\lambda_2 \hat{T}} + \lambda_1 - \lambda_2.
+\]
+If the solution space of $f(\hat{T}) =0 $ is not empty and we can find a set of LCO's solution given by 
+$\hat{T} = T(\gamma, r)$.
+By solving $r$ form $f(\hat{T}) =0$  we have 
+\begin{equation}
+	\frac{1}{r} = \, \frac{ \lambda_1 {\rm e}^{(\lambda_1 + \lambda_2) \hat{T}} - \lambda_2 {\rm e}^{(\lambda_1 + \lambda_2) \hat{T}} - \lambda_1 {\rm e}^{\lambda_1 \hat{T}}  +  \lambda_2 {\rm e}^{\lambda_2 \hat{T}}   }
+	{\lambda_2 {\rm e}^{\lambda_1 \hat{T}} - \lambda_1 {\rm e}^{\lambda_2 \hat{T}} + \lambda_1 - \lambda_2 }
+	\label{eq:r_value_cond_sn}
+\end{equation}
+and the multiplier is given by 
+\begin{equation}
+	\lambda =  \frac{(\lambda_2 {\rm e}^{\lambda_1 \hat{T}} - \lambda_1 {\rm e}^{\lambda_2 \hat{T}} + \lambda_1 - \lambda_2)^2 {\rm e}^{(\lambda_1 + \lambda_2) \hat{T}} }
+	{\left(\lambda_1 {\rm e}^{(\lambda_1 + \lambda_2) \hat{T}} - \lambda_2 {\rm e}^{(\lambda_1 + \lambda_2) \hat{T}} - \lambda_1 {\rm e}^{\lambda_1 \hat{T}}  +  \lambda_2 {\rm e}^{\lambda_2 \hat{T}}\right)^2} = r^2 {\rm e}^{(\lambda_1 + \lambda_2) \hat{T}}.
+\end{equation}
+The function $g$ is defined as
+\begin{equation}
+	\label{eq:def_of_r_sn}
+	g(\tau) \coloneq \frac{ \lambda_1 {\rm e}^{(\lambda_1 + \lambda_2) \hat{T}} - \lambda_2 {\rm e}^{(\lambda_1 + \lambda_2) \tau} - \lambda_1 {\rm e}^{\lambda_1 \tau}  +  \lambda_2 {\rm e}^{\lambda_2 \tau}   }
+	{\lambda_2 {\rm e}^{\lambda_1 \tau} - \lambda_1 {\rm e}^{\lambda_2 \tau} + \lambda_1 - \lambda_2 }
+\end{equation}
+and the function $m$ is defined as 
+\begin{equation}
+	\label{eq:def_of_mp_sn}
+	m(\tau) \coloneq \frac{(\lambda_2 {\rm e}^{\lambda_1 \tau} - \lambda_1 {\rm e}^{\lambda_2 \tau} + \lambda_1 - \lambda_2)^2 {\rm e}^{(\lambda_1 + \lambda_2) \tau} }
+	{\left(\lambda_1 {\rm e}^{(\lambda_1 + \lambda_2) \tau} - \lambda_2 {\rm e}^{(\lambda_1 + \lambda_2) \tau} - \lambda_1 {\rm e}^{\lambda_1 \tau}  +  \lambda_2 {\rm e}^{\lambda_2 \tau}\right)^2} = r^2 {\rm e}^{(\lambda_1 + \lambda_2) \tau}.
+\end{equation}
+%>
+For node case, without loss of generality, let $\lambda_1 > 0 > \lambda_2$.
+\begin{lemma}
+	When $\operatorname{trace}(A)>0$, $g,m$ is monotonically increasing when $\tau \in (0, + \infty)$; When $\operatorname{trace}(A)< 0$, $g,m$ is monotonically decreasing when $\tau \in (0, + \infty)$; 
+\end{lemma}
+\begin{remark}
+	\begin{enumerate}
+		\item If $\lambda_1 > 0 > \lambda_2 > - \lambda_1$, $\operatorname{trace}(A)>0$. $\lim\limits_{\tau \to + \infty} g(\tau) = -\frac{\lambda_1}{\lambda_2}$ , $\lim\limits_{\tau \to + \infty} m(\tau) =  + \infty$.
+		  $1 = g(0) < g(\tau) < -\frac{\lambda_1}{\lambda_2}$, $1 = m(0) < m(\tau) $.
+		
+		\item If $\lambda_1 > 0 > - \lambda_1> \lambda_2 $, $\operatorname{trace}(A)<0$. 
+		$\lim\limits_{\tau \to + \infty} g(\tau) = -\frac{\lambda_1}{\lambda_2}$, $\lim\limits_{\tau \to + \infty} m(\tau) = 0$. $-\frac{\lambda_1}{\lambda_2} < g(\tau) <1 = g(0)$, $0 < m(\tau) <1 = m(0) $.
+		
+		\item If $\lambda_1 >  \lambda_2 > 0$, $\operatorname{trace}(A)>0$.  $\lim\limits_{\tau \to + \infty} g(\tau) = + \infty$ , $\lim\limits_{\tau \to + \infty} m(\tau) =  + \infty$.
+		$ g(\tau) > 1 = g(0)$, $1 = m(0) < m(\tau) $.
+		
+		\item If $ \lambda_2 < \lambda_1 < 0$, $\operatorname{trace}(A)<0$. 
+		$\lim\limits_{\tau \to + \infty} g(\tau) = 0$, $\lim\limits_{\tau \to + \infty} m(\tau) = 0$. $0 < g(\tau) <1 = g(0)$, $0 < m(\tau) <1 = m(0) $.
+	\end{enumerate}
+\end{remark}
 
 \appendix
 \renewcommand{\theequation}{\Alph{section}.\arabic{equation}}

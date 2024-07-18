@@ -36,10 +36,14 @@ u_p         = x_0(2:3);
 %> added on 16th/Dec/2024
 % d      = 0;
 % a1 =0;
-c_     = @(mu) sqrt(-3*a1*d*(mu_crit - mu)*0 + c^2);
+% c_     = @(mu) sqrt(-3*a1*d*(mu_crit - mu)*0 + c^2);
 on_off = 1;
-z_curve_para_1 = @(mu) sqrt(-a0./c_(mu).*(mu_crit - mu) + on_off*a1^2/4./c_(mu).^2.*(mu_crit - mu).^2) - on_off*a1/2./c_(mu).*(mu_crit - mu);
-z_curve_para_2 = @(mu) -sqrt(-a0./c_(mu).*(mu_crit - mu) + on_off*a1^2/4./c_(mu).^2.*(mu_crit - mu).^2) - on_off*a1/2./c_(mu).*(mu_crit - mu);
+% z_curve_para_1 = @(mu) sqrt(-a0./c_(mu).*(mu_crit - mu)   + ...
+%     1*on_off/4./c_(mu).^2 .*(0*a1^2.*(mu_crit - mu).^2 + 0*4*a1.*(mu_crit - mu))) - on_off*a1/2./c_(mu).*(mu_crit - mu);
+% z_curve_para_2 = @(mu) -sqrt( -a0./c_(mu).*(mu_crit - mu) + ...
+%     1*on_off/4./c_(mu).^2 .*( 0*a1^2.*(mu_crit - mu).^2 + 0*4*a1.*(mu_crit - mu))) - on_off*a1/2./c_(mu).*(mu_crit - mu);
+z_curve_para_1 = @(mu) sqrt(a0*c.*(mu - mu_crit) - 0*a1^2*(mu-mu_crit).^2)/c -a1/2./c.*(mu_crit - mu);
+z_curve_para_2 = @(mu) -sqrt(a0*c.*(mu - mu_crit)- 0*a1^2*(mu-mu_crit).^2)/c -a1/2./c.*(mu_crit - mu);
 
 US_predict_z = z_curve_para_1(US_mu_list);
 S_predict_z  = z_curve_para_2(S_mu_list);

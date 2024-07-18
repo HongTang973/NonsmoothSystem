@@ -4,9 +4,6 @@ function prob = full_BEB_SN_IHS_3D_par2prob_NL(par)
 
 %< use the function to form the matrixes 
 [A,B,C,R]  = par2NForm_DummyVar(par);
-% to substract the nonlinear coefficients
-q1         = par(9);
-q2         = par(10);
 % A = [ a1 1 0;
 %       a2 0 1; 
 %       a3 0 0];
@@ -65,7 +62,7 @@ C00 = scale_3* [0.25*4     0       0;
                 0.45   -0.6   0.1];
 
 %% The proposed case is choosen after discussion with David
-scale_1     = 0;%-0.1; 
+scale_1     = 1;%-0.1; 
 scale_2     = 1;% 0.01; 
 scale_3     = 1;% 0.01; 
 % from the formulae, we conclude that the c22 c23 c33 should be zero to get
@@ -76,7 +73,7 @@ A00 = scale_1* [0.5    0    0;
                 0    0    0];
 
 % B00*[x1*x2; x2*x3; x3*x1]
-B00 = scale_2* [q1    0   q2;
+B00 = scale_2* [-1    0   -1;
                 0    0   0;
                 0    0   0];
 % C00*[x1^2; x2^2; x3^2]

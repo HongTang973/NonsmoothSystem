@@ -8,11 +8,11 @@ if ~exist(filepath, 'dir')
 end
 
 
-BEB_U = 0;
-SN_U  = CR_points(2,7);
-SN_eta  = CR_points(2,8);
-L_U   = -0.04;
-R_U   = 0.04;
+BEB_U   = 0;
+SN_U    = CR_points(3,7);
+SN_eta  = CR_points(3,8);
+L_U     = -0.04;
+R_U     = 0.04;
 
 FIG1 = figure;
 %>
@@ -26,7 +26,7 @@ hold on
 %
 h0 = plot([BEB_U BEB_U],[-0.3 0.2],'b-','LineWidth',2.5,'DisplayName','BEB line');
 set(gca,'Layer','top')
-h1 = plot(virtual_SN_mu, virtual_SN_eta,'k--','LineWidth',2.5,'DisplayName','Virtual LCO');
+% h1 = plot(virtual_SN_mu, virtual_SN_eta,'k--','LineWidth',2.5,'DisplayName','Virtual LCO');
 h2 = plot(admiss_SN_mu, admiss_SN_eta,'r-','LineWidth',2.5,'DisplayName','Admissible LCO');
 box2_x = [L_U L_U BEB_U BEB_U L_U];
 box2_y = [-0.3 0.2 0.2 -0.3 -0.3];
@@ -51,12 +51,12 @@ plot(0, SN_eta,'ko','markersize',6,'markerfacecolor',[0.5 0.5 0.5],'linewidth',1
 
 xlabel('$\mu$', 'interpreter','latex')
 ylabel('$\eta$', 'interpreter','latex')
-legend([h0 h1 h2 h3 h4], 'Interpreter','latex','location','best')
+legend([h0  h2 h3 h4], 'Interpreter','latex','location','best')
 adj_plot_theme_I(FIG1)
 
 ax =gca;
-ax.gridlinewidth = 1;
-% ax.GridLineWidth = 1;
+% ax.gridlinewidth = 1;
+ax.GridLineWidth = 1;
 ytick = ax.YTick;
 new_label = cell(1,length(ytick));
 ytick(4)  = 0;

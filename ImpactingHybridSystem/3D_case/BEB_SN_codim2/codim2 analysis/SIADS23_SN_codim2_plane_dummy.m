@@ -1,4 +1,4 @@
-%> use the CO method to track the solution branch
+%% > use the CO method to track the solution branch
 clc
 close all
 par_SN_init     = [-0.1, 0.2, -0.5, 1.781926979010490, 1.6, 5.846868671661380];
@@ -10,12 +10,12 @@ indexes     = [6, 7, 8];
 [t_,Jacob]  = get_jacobian(@SIADS23_SN_zero_Fcns_Dummy, prob.par, indexes) %> & done
 t_(3)/t_(2)
 % prob.keys   =    keys;
-%  ------- new event detection functionality -------
+%%  ------- new event detection functionality -------
 prob.bifur_detct                = 1;
 prob.Events.NumOfEvents         = 6;
 % prob.Events.MonitorFunctions    = @SN_PD_MonitorFcns;
 prob.Events.MonitorFunctions    = @SIAMDS23_SN_codim_MonitorFcns;
-prob.Events.tag                 = {'PD';'PD';'PD';'CR';'CR'};
+prob.Events.tag                 = {'PD';'PD';'PD';'CR';'CR';'CR'};
 % ---------------------------------------------------
 prob.N_points   = 100;
 prob.uplim_step = 2000;

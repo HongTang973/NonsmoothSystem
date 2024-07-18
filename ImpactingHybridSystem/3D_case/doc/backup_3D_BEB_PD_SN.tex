@@ -1,0 +1,384 @@
+
+\section{Examples}
+
+\subsection{Three-dimensional impacting hybrid systems}\label{sec:3d-case-analysis}
+Here we propose a series of general 3D abstract examples considering further nonlinear quadratic terms of flow field in the \eqref{eq:IHS_series}. 
+\begin{equation}
+	\begin{split}
+		\hat{F}(x;\mu,\eta) &= A(\mu, \eta) x + M \mu + \mu^2 A_{00} x + 
+		B_{00}\begin{bmatrix}
+			x_1 x_2 \\
+			x_2 x_3 \\
+			x_3 x_1
+		\end{bmatrix}
+		+
+		C_{00}\begin{bmatrix}
+			x_1^2 \\
+			x_2^2 \\
+			x_3^2
+		\end{bmatrix},
+		\\
+		\hat{W}(x;\mu,\eta) &= -B(\mu, \eta), \\
+		\hat{R}(x;\mu,\eta) &= x - {B}(\mu,\eta) {C}^{\top} \hat{F}(x;\mu,\eta) \\
+		\hat{H}(x;\mu,\eta) &= C^{\top} x,
+	\end{split}
+	\label{eq:codim2_NL_Nform}
+\end{equation}
+where $A_{00}, B_{00}, C_{00} \in \mathbb{R}^{3\times3}$.
+
+\emph{Piecewise linear impacting systems:} 
+If we set $A_{00} =  B_{00} = C_{00} = \mathbf{0}$, we get a series of piecewise linear systems  \eqref{eq:codim2_PWL_Nform}, and we give the following two cases:
+%
+\begin{enumerate}
+	\item[(i-a)]  \label{itm:3D_SN_case}
+	We define a series of 3-D impacting hybrid system with canonical form Jacobian, see also generalized Li\'enard's
+	form in \cite{HoCh23}.
+	The matrices are given as
+	\[ A(\mu, \eta) =
+	\begin{bmatrix}
+		t  & 1 & 0 \\ m & 0 & 1 \\ d & 0 & 0
+	\end{bmatrix}, ~ t = \lambda_1+ \lambda_2 +\lambda_3 , ~ m = -\left[ \lambda_1 \lambda_2 + (\lambda_2 +  \lambda_1)
+	\lambda_3  \right], ~ d = \lambda_1 \lambda_2 \lambda_3,
+	\]
+	and $ \displaystyle M = -\mathbf{e}_3,~ C = \mathbf{e}_1,~
+	B = [0, b_2, b_3]^{\top},~
+	C^{\top}AB = b_2,
+	CA^{-1}B = \frac{b_3}{d},
+	H(x) = C^{\top} x$.
+	More specifically,
+	$
+	\lambda_3 = \lambda_3^0 - \mu, b_2 = b_2^0 + \eta.
+	$
+	\item[(ii-a)] \label{itm:3D_PD_case}
+	We define another series of system, stimulated by the research of another impacting model in [Barcelona2016].
+	With a delicate series of coordinate transformations, the matrices are given as
+	$$ \displaystyle A(\mu, \eta) =
+	\begin{bmatrix}
+		\rho  & \omega & 0 \\ -\omega & \rho & 1 \\ 0 & 0 & -\lambda
+	\end{bmatrix},
+	M = \mathbf{e}_3, ~ C = \mathbf{e}_1,~ B = [0, 1+r , c ]^{\top},~CAB = (1 + r)\omega,
+	$$
+	and $ \displaystyle
+	CA^{-1}B = \frac{\omega(c-\lambda(1+r)) }{\lambda(\omega^2 + \rho^2)}$, $H(x) = C^{\top}x$. More specifically,
+	$r = r_0 + \mu, c = c_0 + \eta.$
+\end{enumerate}
+%
+For the above PWL cases, the LCO's existence in the blow-up system is explored in the way illustrated in
+\cref{sec:pwl}, while the general nonlinear counterparts is analysed with numerical simulations.
+%
+
+\emph{Nonlinear impacting systems:} 
+
+\begin{enumerate}
+	\item[(i-b)] All the other parameters are the same as it in the (i-a) case, apart from non-zero $A_{00}, B_{00}, C_{00}$ to take higher order terms.
+	%
+	$$
+	A_{00} = 
+	\begin{bmatrix}
+		0.25 & 0.1 & 0.2 \\
+		0  & -0.2 & 0.15 \\
+		0.15 & 0.2 & -0.1
+	\end{bmatrix},
+	B_{00} = 0.3 \times
+	\begin{bmatrix}
+		-0.6438  &  0  & -0.5821\\
+		-0.2807 &   -0.3283&  0.8103\\
+		-0.8866  & -0.6487 &  0.3508
+	\end{bmatrix},
+	$$
+	%
+	$$
+	C_{00} = 0.3 \times
+	\begin{bmatrix}
+		1  &  0     &  0 \\
+		-0.5    &  -0.3  &  0.35\\
+		0.45    &  -0.6  &  0.1
+	\end{bmatrix}
+	$$
+	\item[(ii-b)]
+	All the other parameters are the same as it in the (ii-a) case, apart from non-zero $A_{00}, B_{00}, C_{00}$ to take higher order terms.
+	%
+	$$
+	A_{00} = 
+	\begin{bmatrix}
+		0.25 & 0.1 & 0.2 \\
+		0  & -0.2 & 0.15 \\
+		0.15 & 0.2 & -0.1
+	\end{bmatrix},
+	B_{00} = 0.1 \times
+	\begin{bmatrix}
+		-0.4363  & 0    &     -0.7521\\
+		0.0772  &  0.0716 &   -0.0193\\
+		0.3903  & -0.1096 &   0.7060
+	\end{bmatrix},
+	$$
+	%
+	$$
+	C_{00} = 0.15 \times
+	\begin{bmatrix}
+		-1.2  &   0    &     0\\
+		0.1     &   -0.55   &   0.4\\
+		0.25   &    -0.3   &   0.88
+	\end{bmatrix}
+	$$
+\end{enumerate}
+
+
+
+
+\subsubsection{BEB-fold bifurcation}\label{subsec:beb-collides-with-the-sn-bifurcation}
+For the system in case \ref{itm:3D_SN_case}, the period one impacting cycle exists in the blow-up piecewise linear
+system,
+($\mu =0, ~\eta =0$) and the saddle-node bifurcation is observed, given the parameter set
+$$
+\lambda_1 = -1.0 + 0.2 i, \; \lambda_2 = - 0.1 - 0.2 i, \; \lambda_3^0 = -0.5, \; b_2^0 = 1.781926979010494, \; b_3 =
+1.6,
+$$
+A curve $\eta = \eta(\mu)$ defining the SN bifurcation for the system can be found, see \cref{th:hybridSN}, and
+evaluated by the numerical continuation in \Cref{fig:sn_codim2_curve_a}, with other parameters fixed.
+%
+
+Thus, we claim the system \cref{eq:codim2_PWL_Nform} is going through a codimension 2 bifurcation point when $\mu =
+0, \; \eta = 0$, where the $\mu$ is controlling the BEB and $\eta$ is to unfold the SN bifurcation of the
+limit cycle, as shown in \Cref{fig:sn_codim2_curve_b}.
+%
+\begin{figure}[ht!]
+	\centering
+	%
+	\subfloat[SN curve on $(\mu, \eta)$]
+	{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_SIADS23_BEB_SN_codim2}
+		\label{fig:sn_codim2_curve_a}
+	}
+	\subfloat[SN-BEB unfold diagram]
+	{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_SIADS23_BEB_SN_codim2_P2_unfold_full}
+		\label{fig:sn_codim2_curve_b}
+	}
+	\caption{Unfold the BEB-SN bifurcation curve on the $(\mu, \eta)$ plane }
+	\label{fig:codim2_SN_curve}
+\end{figure}
+%
+
+\begin{figure}[h!]
+	\centering
+	%
+	\subfloat[Amplitude variation approximation via \cref{eq:SN_amp_approx_Scaled} for the blow-up system]{
+		\includegraphics[width = 0.45 \linewidth]{../figures/Codim2_3D_unfold_SN_BEB_blow_up}
+		\label{fig:sn_codim2_unfold_a}
+	}
+	\subfloat[Velocity amplitude diagram for the original system: \cref{eq:SN_amp_LCO_approx_OP} prediction vs
+	numerical results]{
+		\includegraphics[width = 0.45 \linewidth]{../figures/Codim2_3D_unfold_SN_BEB_OP}
+		\label{fig:sn_codim2_unfold_b}
+	}
+	\caption{The approximation of the amplitudes of the LCOs around the co-dimension 2 bifurcation point with
+		$\eta = \eta_c,\mu \in [0, \mu_c]$: the red line denotes the analytical prediction and the black line
+		denotes
+		the numerical results; the blue solid line denotes the stable pseudo equilibria.}
+	\label{fig:sn_amplitude_approximation}
+\end{figure}
+%
+\begin{figure}[h!]
+	\centering
+	%
+	\subfloat[BEB-SN diagram for case (i-b)]{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_BEB_SN_codim2_P2_NL_unfold_full}
+		\label{fig:sn_codim2_unfold_b_nl}
+	}
+	\subfloat[BEB-PD diagram for case (ii-b)]{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_Shilnikov_BEB_PD_codim2_P1_NL_unfold_full}
+		\label{fig:pd_codim2_unfold_b_nl}
+	}
+	\caption{The bifurcation diagram of the nonlinear impacting systems: (i-b) and (ii-b).}
+	\label{fig:nl_sn_pd_BEB_diagram}
+\end{figure}
+%
+To unfold the interesting dynamics around the codimension 2 point $(0,0)$ in \Cref{fig:sn_codim2_curve_b}, the
+special diamond point is chosen with $\mu_c = 0.0250, \eta_c = 0.0956$, at which the expansion of the return map
+in the eigen direction $v$ corresponding to unit multiplier of \cref{eq:pMP_expansion} is given in
+\Cref{tab:RMap_expansion}.
+%
+\begin{table}[ht!]
+	\caption{Expansion of the return map \cref{eq:eluded_1D_map}} % title of Table
+	\label{tab:RMap_expansion}
+	\centering % used for centering table
+	\begin{tabular}{c c c c c }
+		\hline\hline
+		& $\lambda$ & $a_0$    & $b_0$     & $a_1$                                         \\
+		\vspace{-1em}
+		\\
+		\hline
+		Analytical prediction [\eqref{eq:pMP_expansion} and \eqref{eq:SN_gradient}] & $1$    & $0.1313$ & $-0
+		.0414$ &
+		$3.4711$                                      \\
+		Numerical approximation [\cref{alg:RMap_expansion_p2} and \cref{lem:SN_PD_gradient}]
+		& $1.00$     & $0.1313$        & $-0.0414$         & $3.4711$ \\
+		\hline
+		& $b_1$ & c & d & $\frac{\partial \eta}{\partial \mu}|_{(0,0)}$\\
+		\vspace{-1em}
+		\\
+		\hline
+		Analytical prediction [\eqref{eq:pMP_expansion} and \eqref{eq:SN_gradient}] &
+		$0.0055$ & $1.1125$ & -6.9149 & 3.1712 \\
+		Numerical approximation [\cref{alg:RMap_expansion_p2} and \cref{lem:SN_PD_gradient}] &
+		$0.0055$ & $1.1125$ & -6.9149 & 3.1712 \\
+		\hline
+	\end{tabular}
+\end{table}
+%
+Further, we look into the dynamics on the segment of line $\eta = \eta_c$ in the region $\mu \in [0,\mu_c]$. The
+\cref{eq:SN_amp_approx_Scaled} in Conjecture \ref{th:SN_codim_LCO_amp} shows the approximation of the limit
+cycle's amplitude variation for the scaled system, according to \cref{def:def_amp} with $\mathcal{C} = [0,1,
+0]^{\top}$ and $\mathcal{K} = v(1)$ in \cref{eq:def_amp_variabation}, the \Cref{fig:sn_codim2_unfold_a} shows the
+good agreement.
+Besides, \cref{eq:SN_amp_LCO_approx_OP} in Conjecture \ref{th:SN_codim_LCO_amp} gives approximation of the
+original system's limit cycle amplitude, and it agrees well with the numerical results as illustrated in
+\Cref{fig:sn_codim2_unfold_b}.
+%
+
+% ------------------------------------------------
+
+\subsubsection{BEB-period-doubling bifurcation}\label{subsec:beb-collides-with-pd}
+For the system in case \ref{itm:3D_PD_case}, the period one impacting cycle exists in the blow-up piecewise-linear
+system,
+($\mu =0, ~\eta =0$) and the period-doubling bifurcation is observed, given the parameter set
+$$
+\rho = 0.1, \omega = 1, \lambda = 0.3, r = 0.65336, c = 0.788.
+$$
+A curve $\eta = \eta(\mu)$ defining the PD bifurcation for the system can be found, see \cref{th:hybridPD},
+evaluated by the numerical continuation in \Cref{fig:PD_codim2_curve_a}, with other parameters fixed.
+The system \cref{eq:codim2_truncated_sys} is going through a codimension 2 bifurcation point when $\mu =
+0, \; \eta = 0$, where the $\mu$ is controlling the BEB and $\eta$ is to unfold the PD bifurcation of the
+limit cycle, as shown in \Cref{fig:PD_codim2_curve_b}.
+%
+\begin{table}[ht!]
+	\caption{Expansion of the return map \cref{eq:eluded_1D_map}} % title of Table
+	\label{tab:RMap_expansion_PD}
+	\centering % used for centering table
+	\begin{tabular}{c c c c c }
+		\hline\hline
+		& $\lambda$ & $a_0$    & $b_0$     & $a_1$                                         \\
+		\vspace{-1em}
+		\\
+		\hline
+		Analytical prediction [\eqref{eq:pMP_expansion} and \eqref{eq:PD_gradient}] & $-1$   & $1.4061$ & $-2
+		.1941$ &
+		$8.4612$                                      \\
+		Numerical approximation [\cref{alg:RMap_expansion_p2} and \cref{lem:SN_PD_gradient}]
+		& $-1.00$     & $1.4061$        & $-2.1941$         & $8.4612$ \\
+		\hline
+		& $b_1$ & c & d & $\frac{\partial \eta}{\partial \mu}|_{(0,0)}$\\
+		\vspace{-1em}
+		\\
+		\hline
+		Analytical prediction [\eqref{eq:pMP_expansion} and \eqref{eq:PD_gradient}] & $-7.5442$ & $1.9049$ & 3.6351
+		& 0.9502 \\
+		Numerical approximation [\cref{alg:RMap_expansion_p2} and \cref{lem:SN_PD_gradient}] & $-7.5442$ & $1
+		.9049$ & 3.6351 & 0.9495 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+To unfold the interesting dynamics around the codimension 2 point $(0,0)$ in \Cref{fig:PD_codim2_curve_b}, the
+special diamond point is chosen with $\mu_c = 0.02, \eta_c = 0.0916$, at which the expansion of the return map
+in the eigen direction $v$ corresponding to $-1$ multiplier of \cref{eq:pMP_expansion} is given in
+\Cref{tab:RMap_expansion_PD}.
+%
+\begin{figure}[ht!]
+	\centering
+	%
+	\subfloat[Codim-2 BEB-PD diagram on $(\mu, \eta)$]
+	{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_Shilnikov_BEB_PD_codim2}
+		\label{fig:PD_codim2_curve_a}
+	}
+	\subfloat[Slice A unfold]
+	{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_Shilnikov_BEB_PD_codim2_P1_unfold_full}
+		\label{fig:PD_codim2_curve_b}
+	}
+	\caption{BEB-PD bifurcation diagram}
+	\label{fig:codim2_PD_curve}
+\end{figure}
+%
+\begin{figure}[ht!]
+	\centering
+	%
+	\subfloat[In blow-up system]{
+		\includegraphics[width = 0.45 \linewidth]{../figures/PD_Codim2_unfold_3D_on_DS_blowup}
+		\label{fig:PD_codim2_unfold_a}
+	}
+	\subfloat[In original system]{
+		\includegraphics[width = 0.45 \linewidth]{../figures/PD_Codim2_unfold_3D_on_DS_full}
+		\label{fig:PD_codim2_unfold_b}
+	}
+	\caption{Unfold the BEB-PD on slice A: approximation of the amplitudes of the LCOs around the co-dimension 2
+		bifurcation point with
+		$\eta = \eta_c,\mu \in [0,\mu_c]$: solid lines - analytical prediction; blue dotes -brute force simulation; blue dashed line  unstable admissible equilibria.}
+	\label{fig:amplitude_approximation_PD}
+\end{figure}
+%
+%
+\begin{figure}[ht!]
+	\centering
+	%
+	\subfloat[]
+	{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_Shilnikov_BEB_PD_codim2_P4_unfold_full}
+		\label{fig:PD_codim2_unfold_P2}
+	}
+	\subfloat[]
+	{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_Shilnikov_BEB_PD_codim2_P3_unfold_full}
+		\label{fig:PD_codim2_unfold_P3}
+	}
+	\\
+	\subfloat[Slice N unfold]{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_Shilnikov_BEB_PD_codim2_P4_unfold_blowup}
+		\label{fig:PD_codim2_unfold_N}
+	}
+	\subfloat[Slice C unfold]{
+		\includegraphics[width = 0.45 \linewidth]{../figures/3D_Shilnikov_BEB_PD_codim2_P3_unfold_blowup}
+		\label{fig:PD_codim2_unfold_N}
+	}
+	\label{fig:codim2_PD_unfold}
+	\caption{BEB-PD bifurcation diagram: Slices N, C}
+\end{figure}
+%
+\begin{figure}[h!]
+	\centering
+	%
+	\subfloat[$\mu = 0.0015$]{
+		\includegraphics[width = 0.4 \linewidth]{../figures/3D_BEB_PD_codim2_portrait_0.0015}
+		\label{fig:PD_codim2_unfold_a}
+	}
+	\subfloat[$\mu = 0.0027$]{
+		\includegraphics[width = 0.4 \linewidth]{../figures/3D_BEB_PD_codim2_portrait_0.0027}
+		\label{fig:PD_codim2_unfold_b}
+	}
+	\\
+	\subfloat[$\mu = 0.0028$]{
+		\includegraphics[width = 0.4 \linewidth]{../figures/3D_BEB_PD_codim2_portrait_0.0028}
+		\label{fig:PD_codim2_unfold_a}
+	}
+	\subfloat[$\mu = 0.0455$]{
+		\includegraphics[width = 0.4 \linewidth]{../figures/3D_BEB_PD_codim2_portrait_0.0445}
+		\label{fig:PD_codim2_unfold_b}
+	}
+	\caption{Unfold the BEB-PD on slice C: the transition from periodic orbit to chaotic attractor via grazing}
+	\label{fig:slice_C_phase_portraits}
+\end{figure}
+
+%
+
+Further, we look into the dynamics on the segment of line $\eta = \eta_c$ in the region $\mu \in [0,\mu_c]$. The
+\cref{eq:PD_amp_approx_scaled} in Conjecture \cref{th:PD_amp_approx} shows the approximation of the limit
+cycle's amplitude variation for the scaled system, according to \cref{def:def_amp} with $\mathcal{C} = [0,1,
+0]^{\top}$ and $\mathcal{K} = v(1)$ in \cref{eq:def_amp_variabation}, the \Cref{fig:sn_codim2_unfold_a} shows the
+good agreement.
+Besides, \cref{eq:SN_amp_LCO_approx_OP} in Conjecture \cref{th:SN_codim_LCO_amp} gives approximation of the
+original system's limit cycle amplitude, and it agrees well with the numerical results as illustrated in
+\Cref{fig:sn_codim2_unfold_b}.
+%

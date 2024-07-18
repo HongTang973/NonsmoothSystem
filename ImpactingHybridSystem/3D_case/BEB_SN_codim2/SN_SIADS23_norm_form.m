@@ -1,5 +1,6 @@
 %> test the composed_map function
-SN_point_admis  = [-0.1 + 0.2i, -0.1 - 0.2i, -0.5 , 1.781916719621720+0.000010259409,  1.6  , 5.846837671661376];
+% SN_point_admis  = [-0.1 + 0.2i, -0.1 - 0.2i, -0.5 , 1.781916719621720+0.000010259409,  1.6  , 5.846837671661376];
+SN_point_admis  = [-0.1 + 0.2i, -0.1 - 0.2i, -0.525 , 1.87749548870845,  1.6  , 4.79596124049338];
 equi_type       = 1;
 %>
 [A,B,C,R, T_2_det]  = par2NForm_Lienard(SN_point_admis);
@@ -31,11 +32,12 @@ prob.sys_vec_index.T_simu_index     = T_simu_index;
 
 %> ----- define the functions to form the question
 prob.evol_seq                       = 'map_phi';
+prob.equi_type                      = 1;
 % prob.evol_seq                       = 'phi_map';
 prob.par_2_flow_operator            = @SIADS23_3D_ODEs;
 prob.par_2_ResetMap                 = @SIADS23_3D_ResetMap;
 prob.efunc                          = @SIADS23_3D_H_x;
-prob.OB_C                           = [1, 0, 0];
+prob.C                              = [1, 0, 0];
 %>
 % Flow_ode      =  prob.par_2_flow_operator(par);
 % ResetMap      =  prob.par_2_ResetMap(par);
@@ -57,13 +59,6 @@ sys_vec = [x_p; T_p; sys_par; IC; T];
 prob.call_type = 'jacobian';
 [J_pMP,eigD_pMP, eigV_pMP, dT_dy] = General_IHS_Numerical_PMP_Jacobian(prob, sys_vec);
 
-%% Taylor expansion
-prob.sys_vec = sys_vec;
-prob.Fcn_Map_fp = x_p(C<1);
-prob.Fcn_Map_dim = 2;
-prob.Fcn_Map_dim_par = 5;
-prob.Fcn_MaptobeExpanded = @(IC) PMP_SIADS23(prob,IC,sys_par);
-[BB,CC] = TaylorExp_Map_Fcn(prob);
 %
 %> find the right & left eigenvector and normalize the left eigenvector
 [eigLV_pMP, eigLD_pMP] = eig(J_pMP');
@@ -83,8 +78,12 @@ prob.fixed_point.w = w;
 prob.fixed_point.eigV = eigV_pMP;
 % prob.IPC_num_allowed = 1;
 [poly_coeff_CtrErr, par_coeff_CtrErr,bilinear_coeff_CtrErr] = General_IHS_PMP_sys_par_coeff(prob, sys_vec)
-
-[poly_coeff_2, par_coeff_2,bilinear_coeff_2] = IHS_PMP_3D_exapnsion_in_Eigenspace(prob, sys_vec)
+% for the double iterated map 
+% prob_db_ited = prob;
+% prob_db_ited.IPC_num_allowed = 2;
+% [poly_coeff_CtrErr_db, par_coeff_CtrErr_db,bilinear_coeff_CtrErr_db] = General_IHS_PMP_sys_par_coeff(prob_db_ited, sys_vec)
+%
+% [poly_coeff_2, par_coeff_2,bilinear_coeff_2] = IHS_PMP_3D_exapnsion_in_Eigenspace(prob, sys_vec)
 
 %% > define the specific problem by setting the flow and the reset map
 %  > and event function
@@ -97,3 +96,16 @@ d  = poly_coeff_CtrErr(1,3);
 
 
 -a0/b0
+
+%% Taylor expansion  -- for the Normal form calculation with Yuri's book
+prob.sys_vec         = sys_vec;
+prob.Fcn_Map_fp      = x_p(C<1);
+prob.Fcn_Map_dim     = 2;
+prob.Fcn_Map_dim_par = 5;
+prob.Fcn_MaptobeExpanded = @(IC) PMP_SIADS23(prob,IC,sys_par);
+[BB,CC] = TaylorExp_Map_Fcn(prob);
+Bvv = BilinearFunction(BB,v,v);
+b_ = dotprod(w',Bvv)/2
+a_ = Bvv - dotprod(w', Bvv)*v
+sol = [J_pMP,v;w' 0]\[a_;0]; w2 = sol(1:end-1)
+c_ = 1/6*w'*TrilinearFunction(CC,v,v,v) -0.5*w'*BilinearFunction(BB,v,(J_pMP - eye(2)\Bvv))

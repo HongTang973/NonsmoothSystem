@@ -115,12 +115,8 @@ h2 = plot(US_u(7,:),US_u(6,:),'k--','linewidth', 1.5,'displayname','Unstable LCO
 %% to truncate the bifurcation diagram
 S_B  = zeros(1,size(S_u,2));
 US_B  = zeros(1,size(US_u,2));
-S_amp  = zeros(1,size(S_u,2));
-US_amp  = zeros(1,size(US_u,2));
-M          = [0;0;-1];
 for i = 1:size(S_u,2)
 [A,B,C,R]           = par2NForm_DummyVar(S_u(:,i));
-S_amp(i)            = C*inv(A)*M;
 T                   = S_u(6,i);
 x_00                = IC_generator(T,R,A,C,1);
 [Mono_p,Salt_p]=IC2Floque_Multipliers(T,x_00,R,A,C);
@@ -143,7 +139,6 @@ end
 %
 for i = 1:size(US_u,2)
 [A,B,C,R]           = par2NForm_DummyVar(US_u(:,i));
-US_amp(i)            = C*inv(A)*M;
 T                   = US_u(6,i);
 x_00                = IC_generator(T,R,A,C,1);
 [Mono_p,Salt_p]=IC2Floque_Multipliers(T,x_00,R,A,C);
@@ -163,8 +158,3 @@ options = odeset('Events',@(t,y) ...
 [t,y,te,ye,ie] = ode45(@(t,y) A*y,[0 10],x_00,options);
 US_B(i) = ye(1,1);
 end
-%%
-figure
-h1 = plot(S_u(7,:),S_amp.*S_u(7,:).*S_B - S_u(7,:).*S_amp ,'r-','linewidth', 1.5, 'displayname','Stable LCO');
-hold on
-h2 = plot(US_u(7,:),US_amp.*US_u(7,:).*US_B - US_u(7,:).*US_amp,'k--','linewidth', 1.5,'displayname','Unstable LCO');

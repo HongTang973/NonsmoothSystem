@@ -5,6 +5,7 @@ load('.\BEB_2_SN_LCO_continuation.mat')
 SN_point_admis = P2;
 SN_point_admis(3:4) = SN_point_admis(3:4) + [-mu_crit,eta_crit];
 %> use the numerics to evaluate the local expansions
+
 % SN_SIADS23_norm_form;
 
 
@@ -36,7 +37,7 @@ u_p         = x_0(2:3);
 %> added on 16th/Dec/2024
 % d      = 0;
 % a1 =0;
-c_     = @(mu) sqrt(-3*a1*d*(mu_crit - mu)*0 + c^2);
+c_     = @(mu) sqrt(-3*a1*d*(mu_crit - mu)*1 + c^2);
 on_off = 1;
 z_curve_para_1 = @(mu) sqrt(-a0./c_(mu).*(mu_crit - mu) + on_off*a1^2/4./c_(mu).^2.*(mu_crit - mu).^2) - on_off*a1/2./c_(mu).*(mu_crit - mu);
 z_curve_para_2 = @(mu) -sqrt(-a0./c_(mu).*(mu_crit - mu) + on_off*a1^2/4./c_(mu).^2.*(mu_crit - mu).^2) - on_off*a1/2./c_(mu).*(mu_crit - mu);

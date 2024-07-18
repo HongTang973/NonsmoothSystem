@@ -2,7 +2,7 @@
 %> ---------------- BRUTE FORCE DIAGRAM SIMULATION ----------------- %
 clear
 clc
-close all
+% close all
 
 %% > initialization for the parallel computing
 
@@ -31,10 +31,10 @@ p1_up_limit     = p_span(2);
 p1_bot_limit    = p_span(1);
 delta_1         = 0.01;
 p1_care_list    = p1_bot_limit:delta_1:p1_up_limit;
-p1_care_list    = 0.01;
+p1_care_list    = -0.05;
 % p1_care_list    = 0*-0.0497;
 
 BEB_SN_NL_3D_U_sweeping_forloop;
-
+figure; plot(tout, yout(:,1))
 % copyfile([mfilename('fullpath'),'.m'],folder_2_save);
 % save(strcat(folder_2_save,['\',sprintf('BEB_SN_3D_IHS_codim2_U_%s_P2',date)]))

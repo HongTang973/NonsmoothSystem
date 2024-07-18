@@ -1,3 +1,4 @@
+% clear
 % load('.\P2_NL_brute_force_diagram.mat')
 
 close all
@@ -50,7 +51,7 @@ h1=plot(mu_AE,x_AE,'r-','linewidth',3,'Markersize',10,'displayname','Stable AE')
 h2=plot([BEB_U R_U],[0 0],'-','color',[0 0 1],'linewidth',3,'Markersize',10,'displayname','Stable PE');
 h3 = plot(BEB_U,0,'ko','markersize',6,'markerfacecolor',[0.5 0.5 0.5],'linewidth',2,'DisplayName','BEB point');
 h4 = plot(0.034,0.12533,'rd','markersize',4,'markerfacecolor',[1 1 1],'linewidth',2,'DisplayName','SN point');
-legend([h0 h1 h2 h3 h4], 'Interpreter','latex','location','best')
+
 legend boxoff 
 
 box on
@@ -74,3 +75,10 @@ name ='.\3D_BEB_SN_codim2_P2_NL_unfold_full';
     % picname2 = strcat(filepath,['\',name,'.pdf']);
       picname2 = [name,'.pdf'];
 %    exportgraphics(FIG1,picname2,'ContentType','vector')
+
+load 'C:\Users\ib20968\OneDrive - University of Bristol\Codes stall\NonsmoothSystem\ImpactingHybridSystem\3D_case\BEB_SN_codim2\numerical results\codim2_brute_force\full system\P2_unfold\P2_brute_force_diagram.mat'
+data        = A_diagram(:,2:end);
+data(data<=1e-5) = NaN;
+% Peter_CreatePlotInOrigin(beta_diagram,'beta_diagram')   
+plot(A_diagram(:,1)+0.025,data,'g.','markersize',6)
+legend([h0 h1 h2 h3 h4], 'Interpreter','latex','location','best')

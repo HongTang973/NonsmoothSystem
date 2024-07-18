@@ -1,4 +1,4 @@
-function [poly_coeff_CtrErr, par_coeff_CtrErr,bilinear_coeff_CtrErr,DP_D_par] = General_IHS_PMP_sys_par_coeff(prob, sys_vec)
+function [poly_coeff_CtrErr, par_coeff_CtrErr,bilinear_coeff_CtrErr] = General_IHS_PMP_sys_par_coeff(prob, sys_vec)
 % For a general Hybrid system with a flow region and the reset map on the
 % discontinuity surface, if there is a LCO with
 % x_0: incoming point
@@ -126,7 +126,7 @@ fprintf('lambda converges to %g with %d times iteration and RelTol %g \n', lambd
 init_delta  = 1e-2;
 min_delta   = 1e-12;
 par_coeff_CtrErr  = zeros(dim_par,6);
-DP_D_par          = zeros(length(w),dim_par);
+DP_D_par_CtrErr  = zeros(length(w),dim_par);
 
 for j = 1:dim_par
 
@@ -215,7 +215,6 @@ for j = 1:dim_par
 
 
     end
-    DP_D_par(:,j)         = FO;
     par_coeff_CtrErr(j,1) = w'*FO;
     par_coeff_CtrErr(j,2) = w'*SO/2;
     par_coeff_CtrErr(j,3) = Te;

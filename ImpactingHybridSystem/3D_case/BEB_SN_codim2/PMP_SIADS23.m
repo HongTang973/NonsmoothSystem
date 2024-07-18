@@ -1,8 +1,11 @@
 function f = PMP_SIADS23(prob,IC,sys_par)
+%> this is a newly defined function to get the n-1 dimensional poincare
+%> return map
+% input: IC n-1 dimensional state at hypersurface
 x_p     = prob.sys_vec(prob.sys_vec_index.xp_index);
 T_p     = prob.sys_vec(prob.sys_vec_index.Tp_index);
 T       = prob.sys_vec(prob.sys_vec_index.T_simu_index);
-C       = prob.OB_C;
+C       = prob.C;
 %
 ind         = C<1;
 IC_flow     = x_p;

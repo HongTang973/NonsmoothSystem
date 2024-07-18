@@ -35,7 +35,7 @@ prob.fs    = 20;
 prob.ax_Fcn = @(t,y) C*f_ls(0,f_ls(0,y));
 prob.Wx_Fcn = @(y) -B;
 prob.rx_Fcn = @(x) par(4)+par(8)-1;
-
+prob.bx_Fcn = @(y) C*A*B;
 prob.Impact_map  = @(x) x - B*C*A*x; 
 
 prob.Post_impact_Fcn = @Shilnikov_homoclinic_chaos_post_impact;
