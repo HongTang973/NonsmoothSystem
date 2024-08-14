@@ -7,6 +7,7 @@ function prob = full_BEB_SN_IHS_3D_par2prob_NL(par)
 % to substract the nonlinear coefficients
 q1         = par(9);
 q2         = par(10);
+epsilon    = par(11);
 % A = [ a1 1 0;
 %       a2 0 1; 
 %       a3 0 0];
@@ -66,8 +67,8 @@ C00 = scale_3* [0.25*4     0       0;
 
 %% The proposed case is choosen after discussion with David
 scale_1     = 0;%-0.1; 
-scale_2     = 1;% 0.01; 
-scale_3     = 1;% 0.01; 
+scale_2     = epsilon;% 0.01; 
+scale_3     = 0;% 0.01; 
 % from the formulae, we conclude that the c22 c23 c33 should be zero to get
 % uniformly linear impact restitution law
 

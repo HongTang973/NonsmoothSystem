@@ -1,14 +1,22 @@
 clc
 % clear
 close all
-load('.\BEB_2_SN_LCO_continuation.mat')
-SN_point_admis = P2;
+load('.\BEB_2_SN_LCO_continuation_P3.mat')
+% P3 = [-0.1	0.2	-0.5	1.78192697901049	1.6	4.7959612404933 0.0264121728473816  0.1];
+P3 = [-0.1,0.2,-0.5,1.78192697901049,1.6,4.73578626452264,0.0264121728473816,0.1];
+mu_crit      = P3(7);
+eta_crit     = P3(8);
+SN_point_admis = P3;
+% mu_crit  = 0.0264121728473816;
+% eta_crit = 0.1;
 SN_point_admis(3:4) = SN_point_admis(3:4) + [-mu_crit,eta_crit];
+% mu_crit = 0.0264121728473816;
+% SN_point_admis = [-0.1  0.2	-0.5 1.78192697901049 	1.6	5.84686867166138 ];
 %> use the numerics to evaluate the local expansions
-% SN_SIADS23_norm_form;
+SN_SIADS23_norm_form;
 
 
-%> observe the evolution of the fixed point
+%% > observe the evolution of the fixed point
 S_mu_list               = S_u(7,:);
 US_mu_list              = US_u(7,:);
 S_T_list                = S_u(6,:);
@@ -16,18 +24,18 @@ US_T_list               = US_u(6,:);
 %>
 S_n_num                 = length(S_mu_list);
 US_n_num                = length(US_mu_list);
-S_par_matrix            = repmat(P2,S_n_num,1);
-US_par_matrix           = repmat(P2,US_n_num,1);
+S_par_matrix            = repmat(P3,S_n_num,1);
+US_par_matrix           = repmat(P3,US_n_num,1);
 S_par_matrix(:,6)       = S_T_list;
 S_par_matrix(:,7)       = S_mu_list;
 US_par_matrix(:,6)      = US_T_list;
 US_par_matrix(:,7)      = US_mu_list;
 %> get the fixed point 
-[A,B,C,R]   = par2NForm_DummyVar(P2);
+[A,B,C,R]   = par2NForm_DummyVar(P3);
 % par_matrix(31,:); %> where the irregular point emerges
- x_00       = IC_generator(P2(6),R,A,C,1);
+ x_00       = IC_generator(P3(6),R,A,C,1);
 %  u_p        = x_00(2:3);
-[Mono_p,Salt_p]     = IC2Floque_Multipliers(P2(6),x_00,R,A,C);
+[Mono_p,Salt_p]     = IC2Floque_Multipliers(P3(6),x_00,R,A,C);
 x_0         = R\x_00;
 L0          = C*A*x_0;
 %>

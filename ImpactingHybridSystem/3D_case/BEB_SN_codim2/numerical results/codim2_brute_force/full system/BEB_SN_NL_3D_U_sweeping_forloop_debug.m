@@ -23,7 +23,8 @@ index 		=  [7;8]; %> the location of the flight velocity and the r
 ds     		=  [1;0]; %> varying the parameter which controls the BEB
 %
 Par_ref = ...
-        [-0.1,0.2,-0.5,1.78192697901049,1.6,4.79596124049338,0.025,0.0955685096979647]';
+    [-0.1,0.2,-0.5,1.78192697901049,1.6,4.73578626452264,0.0264121728473816,0.1, -1,0]';
+        % [-0.1,0.2,-0.5,1.78192697901049,1.6,4.79596124049338,0.025,0.0955685096979647]';
 %> 
 p_span          =[-0.05 0.05] ;
 % >
@@ -31,8 +32,8 @@ p1_up_limit     = p_span(2);
 p1_bot_limit    = p_span(1);
 delta_1         = 0.01;
 p1_care_list    = p1_bot_limit:delta_1:p1_up_limit;
-p1_care_list    = -0.05;
-% p1_care_list    = 0*-0.0497;
+% p1_care_list    = -0.05;
+p1_care_list    = -0.01;
 
 BEB_SN_NL_3D_U_sweeping_forloop;
 figure; plot(tout, yout(:,1))
