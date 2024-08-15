@@ -10,9 +10,10 @@ prob.par    = par_SN_init;
 indexes     = [3, 4, 6];
 [t_,Jacob]= get_jacobian(@SIADS23_SN_zero_Fcns, par_SN_init, indexes) %> & done
 % prob.keys   =    keys;
-prob.par2prob                   = @par2NForm_DummyVar;
-% prob.par2prob                   = @par2NForm_Lienard;
-
+% prob.par2prob                   = @par2NForm_DummyVar;
+prob.par2prob                   = @par2NForm_Lienard;
+det_ = SIADS23_SN_zero_Fcns(par_SN_init)
+event_val = SN_PD_MonitorFcns(prob,par_SN_init)
 %  ------- new event detection functionality -------
 prob.bifur_detct                = 0;
 prob.Events.NumOfEvents         = 6;

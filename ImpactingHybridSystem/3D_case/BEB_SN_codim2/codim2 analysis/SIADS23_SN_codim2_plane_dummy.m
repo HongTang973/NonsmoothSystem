@@ -23,6 +23,7 @@ prob.ind_p  =    7;
 prob.ind_x  =    [6,8];
 prob.dir    =    1;
 prob.co_dh  =    1e-2;
+prob.crt_err=    1e-9;
 prob.min_h  =    1e-4;
 prob.p_span = [-0.06 0.06];
 prob.x_span = [4 10; -0.6 0.4];
@@ -38,12 +39,11 @@ toc
 % 
 CR_locus_1    = strcmp(lab1,'CR');
 CR_locus_2    = strcmp(lab2,'CR');
-
-CR_points           = [u1(:,CR_locus_1)'; u2(:,CR_locus_2)'];
+CR_points     = [u1(:,CR_locus_1)'; u2(:,CR_locus_2)'];
 %> 
 t_line = @(x) t_(3)/t_(2)*x;
-x_t_range_1 = [-0.04:0.001:0.04];
-x_t_range_2 = [-0.02:0.0001:0];
+x_t_range_1   = [-0.04:0.001:0.04];
+x_t_range_2   = [-0.02:0.0001:0];
 FIG1 = figure;
 haxes1 = axes;
 h1 = plot(u1(7,:),u1(8,:),'r-','linewidth', 1.5, 'displayname','Addmissible LCO');
@@ -78,17 +78,17 @@ plot(admiss_SN_mu, admiss_SN_eta)
 
 
 %>
-t_bt      = 0;
-t_up      = 10;
-t_range   = t_bt:1/1e4:t_up;
+% t_bt      = 0;
+% t_up      = 10;
+% t_range   = t_bt:1/1e4:t_up;
 
 
-% [A,B,C,R, T_2_det] = par2NForm(par_SN_init);
-% det_range = T_2_det(t_range );
-% figure
-% plot(t_range, det_range)
-% hold on 
-% plot(t_range, 0*t_range, 'r--')
+[A,B,C,R, T_2_det] = par2NForm(par_SN_init);
+det_range = T_2_det(t_range );
+figure
+plot(t_range, det_range)
+hold on 
+plot(t_range, 0*t_range, 'r--')
 
 par_sw = [par_SN_init, 0.01, -0.1];
 [A,B,C,R,T_2_det] = par2NForm_DummyVar(par_sw);
@@ -113,12 +113,12 @@ t_up      = 10;
 t_range   = t_bt:1/1e4:t_up;
 
 
-% [A,B,C,R, T_2_det] = par2NForm(par_SN_init);
-% det_range = T_2_det(t_range );
-% figure
-% plot(t_range, det_range)
-% hold on 
-% plot(t_range, 0*t_range, 'r--')
+[A,B,C,R, T_2_det] = par2NForm(par_SN_init);
+det_range = T_2_det(t_range );
+figure
+plot(t_range, det_range)
+hold on 
+plot(t_range, 0*t_range, 'r--')
 
 par_sn = [par_SN_init, 0.02, 0.1];
 [A,B,C,R,T_2_det] = par2NForm_DummyVar(par_sn);

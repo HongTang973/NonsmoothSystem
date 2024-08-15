@@ -3,7 +3,12 @@ function [u,iter,dis2init,iscirc,discre_err] = corrector(prob,u, new_par,num,ite
 ind_p               = prob.ind_p;
 ind_x               = prob.ind_x;
 ZeroFunctions       = prob.ZeroFunctions;
-tol     = 1e-12;
+%> add customized tolerance in corrector step 
+if isfield(prob, 'crt_err')
+    tol = prob.crt_err;
+else % set as default
+    tol     = 1e-12;
+end
 index   = [ind_p,ind_x];
 par     = u(:,1); % the first point
 while 1

@@ -1,6 +1,9 @@
 %> monitor the multipliers for the period one cycles in impacting hybrid
 %> systems to check the stability and the PD/SN bifurcation
-function [Event_fvals, S_US ]= SN_PD_MonitorFcns(prob, par)
+function [Event_fvals, S_US, p1_det ]= SN_PD_MonitorFcns(prob, par)
+% added the return value det in the third place --> hopefully won't
+% conflict with the previous code, since the previous codes don't require
+% the third return var  ---- 3/9/224 Peter
 [A,B,C,R]           = prob.par2prob(par);
 T                   = par(6);
 x_00                = IC_generator(T,R,A,C,1);
@@ -11,6 +14,7 @@ x_0                 = inv(R)*x_00;
 %> consider the correction of the saltation matrix
 correction  = ((F_ls(x_00)-R*F_ls(x_0))*C)/(C*F_ls(x_0));
 P           =   R + correction;
+p1_det      =   det(R*expm(A*T) - eye(length(C)));
 PA          =   P*expm(A*T);
 if any(any(isnan(PA))) || any(any(~isfinite(PA)))
     keyboard
