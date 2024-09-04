@@ -149,6 +149,7 @@ parfor i = 1:length(par_1_list)
 
     catch ME
         disp(['error at',num2str(p_care)])
+        rethrow(ME)
     end
 end
 toc
